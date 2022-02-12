@@ -1,5 +1,7 @@
+import { ApiError } from 'next/dist/server/api-utils';
 import { useState } from 'react';
 import { supabase } from '../utils/supabaseClient';
+import React, { MouseEvent } from 'react';
 
 export default function Auth() {
   const [loading, setLoading] = useState(false);
@@ -13,8 +15,10 @@ export default function Auth() {
       });
       if (error) throw error;
       alert('Check your email for the login link!');
-    } catch (error: any) {
-      alert(error.error_description || error.message);
+    } catch (error: unknown) {
+      if (error instanceof ApiError) {
+        alert(error.message);
+      }
     } finally {
       setLoading(false);
     }
@@ -39,7 +43,7 @@ export default function Auth() {
         </div>
         <div>
           <button
-            onClick={(e: any) => {
+            onClick={(e: MouseEvent<HTMLButtonElement>) => {
               e.preventDefault();
               handleLogin(email);
             }}
