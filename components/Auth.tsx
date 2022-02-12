@@ -1,7 +1,7 @@
-import { ApiError } from 'next/dist/server/api-utils';
 import { useState } from 'react';
 import { supabase } from '../utils/supabaseClient';
 import React, { MouseEvent } from 'react';
+import { Box, Heading } from '@chakra-ui/react';
 
 export default function Auth() {
   const [loading, setLoading] = useState(false);
@@ -16,7 +16,7 @@ export default function Auth() {
       if (error) throw error;
       alert('Check your email for the login link!');
     } catch (error: unknown) {
-      if (error instanceof ApiError) {
+      if (error instanceof Error) {
         alert(error.message);
       }
     } finally {
@@ -25,10 +25,12 @@ export default function Auth() {
   };
 
   return (
-    <div className='row flex flex-center'>
+    <Box shadow='md' w='sm'>
+      <Heading as='h1' size='lg' textAlign='center'>
+        Supabase + Next.js
+      </Heading>
+      <p className='description'> Sign in via magic link with your email below </p>
       <div className='col-6 form-widget'>
-        <h1 className='header'> Supabase + Next.js </h1>
-        <p className='description'> Sign in via magic link with your email below </p>
         <div>
           <input
             className='inputField'
@@ -51,6 +53,6 @@ export default function Auth() {
           </button>
         </div>
       </div>
-    </div>
+    </Box>
   );
 }

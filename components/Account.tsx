@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '../utils/supabaseClient';
 import { Session } from '@supabase/supabase-js';
-import { ApiError } from 'next/dist/server/api-utils';
+import { Box } from '@chakra-ui/react';
 
 export default function Account({ session }: { session: Session }) {
   const [loading, setLoading] = useState<boolean>(true);
@@ -34,7 +34,7 @@ export default function Account({ session }: { session: Session }) {
         setAvatarUrl(data.avatar_url);
       }
     } catch (error: unknown) {
-      if (error instanceof ApiError) alert(error.message);
+      if (error instanceof Error) alert(error.message);
     } finally {
       setLoading(false);
     }
@@ -75,14 +75,14 @@ export default function Account({ session }: { session: Session }) {
         throw error;
       }
     } catch (error: unknown) {
-      if (error instanceof ApiError) alert(error.message);
+      if (error instanceof Error) alert(error.message);
     } finally {
       setLoading(false);
     }
   }
 
   return (
-    <div className='form-widget'>
+    <Box shadow='md'>
       <div>
         <label htmlFor='email'>Email</label>
         <input id='email' type='text' value={session?.user?.email} disabled />
@@ -111,6 +111,6 @@ export default function Account({ session }: { session: Session }) {
           Sign Out
         </button>
       </div>
-    </div>
+    </Box>
   );
 }

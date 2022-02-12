@@ -3,6 +3,7 @@ import { supabase } from '../utils/supabaseClient';
 import Auth from '../components/Auth';
 import Account from '../components/Account';
 import { Session } from '@supabase/supabase-js';
+import { Flex } from '@chakra-ui/react';
 export default function Home() {
   const [session, setSession] = useState<Session | null>(null);
 
@@ -15,12 +16,8 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="container" style={{ padding: '50px 0 100px 0' }}>
-      {!session ? (
-        <Auth />
-      ) : (
-        <Account key={session?.user?.id} session={session} />
-      )}
-    </div>
+    <Flex align='center' justify='center' height='100vh'>
+      {!session ? <Auth /> : <Account key={session?.user?.id} session={session} />}
+    </Flex>
   );
 }
