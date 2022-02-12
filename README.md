@@ -17,10 +17,15 @@ Still in development. Coming soon!
 
 ### launch supabase
 
+Clone
+
 ```bash
-# clone
 clone https://github.com/codeforjapan/hackdays.git
-# launch supabase
+```
+
+Launch supabase
+
+```bash
 supabase start
 ```
 
@@ -55,6 +60,7 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=YOUR_ANON_KEY_HERE <- replace this
 ```bash
 # instlal dependencies
 yarn install
+# launch website
 yarn dev
 ```
 
