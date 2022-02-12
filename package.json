@@ -9,7 +9,11 @@
     "lint:fix": "next lint --fix"
   },
   "dependencies": {
+    "@chakra-ui/react": "^1.8.3",
+    "@emotion/react": "^11.7.1",
+    "@emotion/styled": "^11.6.0",
     "@supabase/supabase-js": "^1.30.0",
+    "framer-motion": "^6.2.6",
     "next": "12.0.10",
     "react": "17.0.2",
     "react-dom": "17.0.2"
