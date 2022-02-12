@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '../utils/supabaseClient';
 import { Session } from '@supabase/supabase-js';
+import { ApiError } from 'next/dist/server/api-utils';
 
 export default function Account({ session }: { session: Session }) {
   const [loading, setLoading] = useState<boolean>(true);
@@ -32,8 +33,8 @@ export default function Account({ session }: { session: Session }) {
         setWebsite(data.website);
         setAvatarUrl(data.avatar_url);
       }
-    } catch (error: any) {
-      alert(error.message);
+    } catch (error: unknown) {
+      if (error instanceof ApiError) alert(error.message);
     } finally {
       setLoading(false);
     }
@@ -53,13 +54,13 @@ export default function Account({ session }: { session: Session }) {
       const user = supabase.auth.user();
 
       const updates: {
-        id: string;
+        id: string | undefined;
         username: string | null;
         website: string | null;
         avatar_url: string | null;
         updated_at: Date;
       } = {
-        id: user!.id,
+        id: user?.id,
         username,
         website,
         avatar_url,
@@ -73,8 +74,8 @@ export default function Account({ session }: { session: Session }) {
       if (error) {
         throw error;
       }
-    } catch (error: any) {
-      alert(error.message);
+    } catch (error: unknown) {
+      if (error instanceof ApiError) alert(error.message);
     } finally {
       setLoading(false);
     }
