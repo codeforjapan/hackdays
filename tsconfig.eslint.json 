@@ -1,11 +1,12 @@
 {
   "extends": "./tsconfig.json",
   "includes": [
-    "src/**/*.ts",
-    "src/**/*.tsx",
+    "./**/*.ts",
+    "./**/*.tsx",
     ".eslintrc.json"
   ],
   "exclude": [
+    "supabase",
     "node_modules",
     "dist"
   ]
