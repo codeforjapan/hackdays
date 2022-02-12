@@ -48,12 +48,14 @@ cp .env.development.local.sample .env.development.local
 vi .env.development.local
 ```
 
-Replace the YOUR_ANON_KEY_HERE to the `anon key` copied at previous step..
+Replace the YOUR_ANON_KEY_HERE to the `anon key` copied at previous step.
 
 ```text
 NEXT_PUBLIC_SUPABASE_URL=http://localhost:54321
 NEXT_PUBLIC_SUPABASE_ANON_KEY=YOUR_ANON_KEY_HERE <- replace this
 ```
+
+note: If you want to use supabase server instance, please use server's `API URL` and `anon key`. (see [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) for details)
 
 ### launch site
 
@@ -69,6 +71,11 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 You can access a supabase studio with [http://localhost:54323/](http://localhost:54323/).
 
 Also, you can access email logs with [http://localhost:54324/](http://localhost:54324/).
+
+## CAUTION
+
+Currently, Strage function is not supported for the local supabase environment.
+You have to use a server instance for checking the features using Storage, ex. Profile photos.
 
 ## Deployment
 

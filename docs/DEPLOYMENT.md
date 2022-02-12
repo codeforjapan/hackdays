@@ -1,5 +1,11 @@
 # Supabase deployment
 
+## Create new application
+
+Goto https://app.supabase.io/ and create new project.
+
+Copy server `API URL` and `anon key`
+
 ## set the server URL
 
 You need to set remote supabase URL with supabase CLI
