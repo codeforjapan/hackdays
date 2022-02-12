@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '../utils/supabaseClient';
 import { Session } from '@supabase/supabase-js';
-import { Box } from '@chakra-ui/react';
+import { Box, Stack, FormControl, FormLabel, FormErrorMessage, FormHelperText, Input, Button } from '@chakra-ui/react';
+import { PrimaryButton } from './atoms/button/PrimaryButton';
 
 export default function Account({ session }: { session: Session }) {
   const [loading, setLoading] = useState<boolean>(true);
@@ -83,34 +84,28 @@ export default function Account({ session }: { session: Session }) {
 
   return (
     <Box shadow='md'>
-      <div>
-        <label htmlFor='email'>Email</label>
-        <input id='email' type='text' value={session?.user?.email} disabled />
-      </div>
-      <div>
-        <label htmlFor='username'>Name</label>
-        <input id='username' type='text' value={username || ''} onChange={(e) => setUsername(e.target.value)} />
-      </div>
-      <div>
-        <label htmlFor='website'>Website</label>
-        <input id='website' type='website' value={website || ''} onChange={(e) => setWebsite(e.target.value)} />
-      </div>
+      <Stack spacing={4} py={4} px={10}>
+        <FormControl>
+          <FormLabel htmlFor='email'>Email</FormLabel>
+          <Input id='email' type='text' value={session?.user?.email} disabled />
+        </FormControl>
+        <FormControl>
+          <FormLabel htmlFor='username'>Name</FormLabel>
+          <Input id='username' type='text' value={username || ''} onChange={(e) => setUsername(e.target.value)} />
+        </FormControl>
+        <FormControl>
+          <FormLabel htmlFor='website'>Website</FormLabel>
+          <Input id='website' type='website' value={website || ''} onChange={(e) => setWebsite(e.target.value)} />
+        </FormControl>
 
-      <div>
-        <button
-          className='button block primary'
-          onClick={() => updateProfile({ username, website, avatar_url })}
-          disabled={loading}
-        >
+        <PrimaryButton onClick={() => updateProfile({ username, website, avatar_url })} disabled={loading}>
           {loading ? 'Loading ...' : 'Update'}
-        </button>
-      </div>
+        </PrimaryButton>
 
-      <div>
-        <button className='button block' onClick={() => supabase.auth.signOut()}>
+        <Button className='button block' onClick={() => supabase.auth.signOut()}>
           Sign Out
-        </button>
-      </div>
+        </Button>
+      </Stack>
     </Box>
   );
 }
