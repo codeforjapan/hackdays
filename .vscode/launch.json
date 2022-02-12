@@ -2,11 +2,26 @@
   "version": "0.2.0",
   "configurations": [
     {
+      // For server side rendering debug
       "type": "node",
-      "request": "attach",
-      "name": "Launch Program",
-      "skipFiles": ["<node_internals>/**"],
-      "port": 9229
+      "request": "launch",
+      "name": "Next: Node",
+      "runtimeExecutable": "npm",
+      "cwd": "${workspaceFolder}/src",
+      "runtimeArgs": ["run", "dev"],
+      "port": 9229,
+      "console": "integratedTerminal"
+    },
+    {
+      // For client side rendering debug
+      "type": "chrome",
+      "request": "launch",
+      "name": "Next: Chrome",
+      "url": "http://localhost:3000",
+      "webRoot": "${workspaceFolder}",
+      "sourceMapPathOverrides": {
+        "webpack:///./*": "${webRoot}/src/*"
+      }
     }
   ]
 }
