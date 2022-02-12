@@ -6,7 +6,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "lint:fix": "eslint \"./**/*.{ts,tsx}\" --fix"
+    "lint:fix": "next lint --fix"
   },
   "dependencies": {
     "@supabase/supabase-js": "^1.30.0",
