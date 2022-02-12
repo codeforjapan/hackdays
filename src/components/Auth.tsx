@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { supabase } from '../utils/supabaseClient';
-import React, { MouseEvent } from 'react';
+import React from 'react';
 import { Box, Heading, Stack, Text, Input } from '@chakra-ui/react';
 import { PrimaryButton } from './atoms/button/PrimaryButton';
 
