@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { supabase } from '../utils/supabaseClient';
 import React, { MouseEvent } from 'react';
-import { Box, Heading } from '@chakra-ui/react';
+import { Box, Heading, Stack, Text, Input } from '@chakra-ui/react';
+import { PrimaryButton } from './atoms/button/PrimaryButton';
 
 export default function Auth() {
   const [loading, setLoading] = useState(false);
@@ -23,36 +24,27 @@ export default function Auth() {
       setLoading(false);
     }
   };
-
+  const onClickLogin = () => {
+    handleLogin(email);
+  };
   return (
     <Box shadow='md' w='sm'>
       <Heading as='h1' size='lg' textAlign='center'>
         Supabase + Next.js
       </Heading>
-      <p className='description'> Sign in via magic link with your email below </p>
-      <div className='col-6 form-widget'>
-        <div>
-          <input
-            className='inputField'
-            type='email'
-            placeholder='Your email'
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </div>
-        <div>
-          <button
-            onClick={(e: MouseEvent<HTMLButtonElement>) => {
-              e.preventDefault();
-              handleLogin(email);
-            }}
-            className='button block'
-            disabled={loading}
-          >
-            <span>{loading ? 'Loading' : 'Send magic link'} </span>
-          </button>
-        </div>
-      </div>
+      <Text textAlign='center'> Sign in via magic link with your email below </Text>
+      <Stack spacing={6} py={4} px={10}>
+        <Input
+          className='inputField'
+          type='email'
+          placeholder='Your email'
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <PrimaryButton onClick={onClickLogin} loading={loading}>
+          Send magic link
+        </PrimaryButton>
+      </Stack>
     </Box>
   );
 }
