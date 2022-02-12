@@ -2,7 +2,7 @@
 name: User stories
 about: User stories document
 title: "[Story] simple title"
-labels: ''
+labels: user story
 assignees: ''
 
 ---
