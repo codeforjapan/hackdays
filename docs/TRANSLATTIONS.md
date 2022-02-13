@@ -31,5 +31,4 @@ yarn txjs-push
 
 Transifex Live supports live translations. You don't need to download resource files.
 
-(For production website, maybe we should download the resource files if there's performance problems.)
-[FAQ about Transifex Live](https://docs.transifex.com/live/faq)
+See [FAQ about Transifex Live](https://docs.transifex.com/live/faq) for more details
