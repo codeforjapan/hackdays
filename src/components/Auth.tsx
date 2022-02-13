@@ -34,17 +34,17 @@ export default function Auth() {
       <Heading as='h1' size='lg' textAlign='center'>
         {t('Find wonderful projects')}
       </Heading>
-      <Text textAlign='center'> Sign in via magic link with your email below </Text>
+      <Text textAlign='center'> {t('Sign in via magic link with your email below')} </Text>
       <Stack spacing={6} py={4} px={10}>
         <Input
           className='inputField'
           type='email'
-          placeholder='Your email'
+          placeholder={t('Your email')}
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
         <PrimaryButton onClick={onClickLogin} loading={loading}>
-          Send magic link
+          {t('Send magic link')}
         </PrimaryButton>
       </Stack>
     </Box>
