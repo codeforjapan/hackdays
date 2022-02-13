@@ -10,8 +10,10 @@ Copy server `API URL` and `anon key`
 
 You need to set remote supabase URL with supabase CLI
 
+The password should be `percent-encoded`.
+
 ```bash
-supabase db remote set postgresql://postgres:YOUR_INSTANCE.YOUR_PASSWORD.supabase.co:5432/postgres
+supabase db remote set 'postgresql://postgres:[YOUR-PASSWORD]@db.[YOUR_INSTANCE].supabase.co:5432/postgres'
 supabase db remote commit
 ```
 
