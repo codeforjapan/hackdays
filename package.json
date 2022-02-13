@@ -6,13 +6,17 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "lint:fix": "next lint --fix"
+    "lint:fix": "next lint --fix",
+    "txjs-push": "source .env.development.local; export TRANSIFEX_TOKEN TRANSIFEX_SECRET; txjs-cli push src/"
   },
   "dependencies": {
     "@chakra-ui/react": "^1.8.3",
     "@emotion/react": "^11.7.1",
     "@emotion/styled": "^11.6.0",
     "@supabase/supabase-js": "^1.30.0",
+    "@transifex/cli": "^2.3.1",
+    "@transifex/native": "^2.3.1",
+    "@transifex/react": "^2.3.1",
     "framer-motion": "^6.2.6",
     "next": "12.0.10",
     "react": "17.0.2",

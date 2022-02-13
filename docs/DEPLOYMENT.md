@@ -2,7 +2,7 @@
 
 ## Create new application
 
-Goto https://app.supabase.io/ and create new project.
+Goto [https://app.supabase.io/](https://app.supabase.io/) and create new project.
 
 Copy server `API URL` and `anon key`
 
