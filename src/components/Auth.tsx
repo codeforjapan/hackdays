@@ -3,6 +3,7 @@ import { supabase } from '../utils/supabaseClient';
 import React from 'react';
 import { Box, Heading, Stack, Text, Input } from '@chakra-ui/react';
 import { PrimaryButton } from './atoms/button/PrimaryButton';
+import { useT } from '@transifex/react';
 
 export default function Auth() {
   const [loading, setLoading] = useState(false);
@@ -27,10 +28,11 @@ export default function Auth() {
   const onClickLogin = () => {
     handleLogin(email);
   };
+  const t = useT();
   return (
     <Box shadow='md' w='sm'>
       <Heading as='h1' size='lg' textAlign='center'>
-        Supabase + Next.js
+        {t('Find wonderful projects')}
       </Heading>
       <Text textAlign='center'> Sign in via magic link with your email below </Text>
       <Stack spacing={6} py={4} px={10}>
