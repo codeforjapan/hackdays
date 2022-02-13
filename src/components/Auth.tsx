@@ -4,10 +4,12 @@ import React from 'react';
 import { Box, Heading, Stack, Text, Input } from '@chakra-ui/react';
 import { PrimaryButton } from './atoms/button/PrimaryButton';
 import { useT } from '@transifex/react';
+import useUser from '../hooks/useUser';
 
 export default function Auth() {
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState('');
+  const { signInWithGithub } = useUser();
 
   const handleLogin = async (email: string) => {
     try {
@@ -34,6 +36,11 @@ export default function Auth() {
       <Heading as='h1' size='lg' textAlign='center'>
         {t('Find wonderful projects')}
       </Heading>
+      <Stack spacing={6} py={4} px={10}>
+        <PrimaryButton onClick={signInWithGithub} loading={loading}>
+          Login with GitHub
+        </PrimaryButton>
+      </Stack>
       <Text textAlign='center'> {t('Sign in via magic link with your email below')} </Text>
       <Stack spacing={6} py={4} px={10}>
         <Input
