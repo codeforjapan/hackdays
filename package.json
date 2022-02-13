@@ -7,7 +7,7 @@
     "start": "next start",
     "lint": "next lint",
     "lint:fix": "next lint --fix",
-    "txjs-push": "source .env.development.local txjs-cli push src/"
+    "txjs-push": "source .env.development.local; export TRANSIFEX_TOKEN TRANSIFEX_SECRET; txjs-cli push src/"
   },
   "dependencies": {
     "@chakra-ui/react": "^1.8.3",
