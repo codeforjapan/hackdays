@@ -15,6 +15,11 @@ supabase db remote set postgresql://postgres:YOUR_INSTANCE.YOUR_PASSWORD.supabas
 supabase db remote commit
 ```
 
+## set Auth settings
+
+Third party authentication is not supported on the local environment.
+You need to use an app.supabase.io for testing Auth functions.
+
 ## wipe a local database
 
 ```bash
