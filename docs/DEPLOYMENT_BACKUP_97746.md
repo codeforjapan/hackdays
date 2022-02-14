@@ -17,6 +17,12 @@ Run `ALTER ROLE postgres SUPERUSER;` in the project's SQL editor
 You need to set remote supabase DB URL and password with supabase CLI. Run below command in your Terminal.
 
 ```bash
+<<<<<<< HEAD
+supabase db remote set postgresql://postgres:YOUR_INSTANCE.YOUR_PASSWORD.supabase.co:5432/postgres
+supabase db remote commit
+```
+
+=======
 supabase db remote set 'postgresql://postgres:[YOUR-PASSWORD]@db.[YOUR_INSTANCE].supabase.co:5432/postgres'
 supabase db remote push
 supabase db remote commit
@@ -31,6 +37,7 @@ Run `ALTER ROLE postgres NOSUPERUSER;` in the project's SQL editor
 Third party authentication is not supported on the local environment.
 You need to use an app.supabase.io for testing Auth functions.
 
+>>>>>>> cfacb84 (fix migration instruction. close DB migration doesn't work #16)
 ## wipe a local database
 
 ```bash
