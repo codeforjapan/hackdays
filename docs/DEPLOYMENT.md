@@ -16,6 +16,8 @@ Run `ALTER ROLE postgres SUPERUSER;` in the project's SQL editor
 
 You need to set remote supabase DB URL and password with supabase CLI. Run below command in your Terminal.
 
+The password should be `percent-encoded`.
+
 ```bash
 supabase db remote set 'postgresql://postgres:[YOUR-PASSWORD]@db.[YOUR_INSTANCE].supabase.co:5432/postgres'
 supabase db remote push
