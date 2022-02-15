@@ -7,7 +7,9 @@
     "start": "next start",
     "lint": "next lint",
     "lint:fix": "next lint --fix",
-    "txjs-push": "source .env.development.local; export TRANSIFEX_TOKEN TRANSIFEX_SECRET; txjs-cli push src/"
+    "txjs-push": "source .env.development.local; export TRANSIFEX_TOKEN TRANSIFEX_SECRET; txjs-cli push src/",
+    "cypress": "cypress open",
+    "cypress:headless": "cypress run"
   },
   "dependencies": {
     "@chakra-ui/react": "^1.8.3",
@@ -27,6 +29,7 @@
     "@types/react": "^17.0.39",
     "@typescript-eslint/eslint-plugin": "^5.11.0",
     "@typescript-eslint/parser": "^5.11.0",
+    "cypress": "^9.4.1",
     "eslint": "^8.9.0",
     "eslint-config-next": "12.0.10",
     "eslint-config-prettier": "^8.3.0",
