@@ -1,6 +1,6 @@
-import { supabase } from '../utils/supabaseClient';
+import { supabase } from '../../utils/supabaseClient';
 import { Flex } from '@chakra-ui/react';
-import ProjectForm from '../components/ProjectForm';
+import ProjectForm from '../../components/ProjectForm';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 export default function CreateProject() {

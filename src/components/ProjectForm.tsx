@@ -2,13 +2,16 @@ import { useState } from 'react';
 import { supabase } from '../utils/supabaseClient';
 import { Box, FormControl, FormLabel, Input, Stack } from '@chakra-ui/react';
 import { PrimaryButton } from './atoms/button/PrimaryButton';
+import { useRouter } from 'next/router';
+import { definitions } from '../../types/supabase';
+import { PostgrestResponse } from '@supabase/supabase-js';
 
 export default function ProjectForm() {
   const [loading, setLoading] = useState<boolean>(false);
   const [projectname, setProjectName] = useState<string | null>(null);
+  const router = useRouter();
   async function createProject({ projectname }: { projectname: string | null }) {
     try {
-      console.log('send data');
       if (!projectname) {
         alert('please set project name');
         return;
@@ -27,12 +30,16 @@ export default function ProjectForm() {
         name: projectname,
       };
 
-      const { data, error } = await supabase.from('projects').insert([newdata]);
+      const { data, error }: PostgrestResponse<definitions['projects']> = await supabase
+        .from('projects')
+        .insert([newdata]);
       if (error) {
         throw error;
       }
-      console.log(data);
-      alert('project was created');
+      if (!data) {
+        throw new Error("can't create data");
+      }
+      router.replace(`/projects/${data[0].id}`);
     } catch (error: unknown) {
       alert((error as Error).message);
     } finally {

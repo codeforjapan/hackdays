@@ -118,7 +118,6 @@ export interface paths {
           id?: parameters["rowFilter.projects.id"];
           owner_user_id?: parameters["rowFilter.projects.owner_user_id"];
           name?: parameters["rowFilter.projects.name"];
-          created_at?: parameters["rowFilter.projects.created_at"];
           purpose?: parameters["rowFilter.projects.purpose"];
           what_to_do?: parameters["rowFilter.projects.what_to_do"];
           problems?: parameters["rowFilter.projects.problems"];
@@ -126,6 +125,7 @@ export interface paths {
           needed_help?: parameters["rowFilter.projects.needed_help"];
           project_url?: parameters["rowFilter.projects.project_url"];
           how_to_join?: parameters["rowFilter.projects.how_to_join"];
+          created_at?: parameters["rowFilter.projects.created_at"];
           updated_at?: parameters["rowFilter.projects.updated_at"];
           /** Filtering Columns */
           select?: parameters["select"];
@@ -180,7 +180,6 @@ export interface paths {
           id?: parameters["rowFilter.projects.id"];
           owner_user_id?: parameters["rowFilter.projects.owner_user_id"];
           name?: parameters["rowFilter.projects.name"];
-          created_at?: parameters["rowFilter.projects.created_at"];
           purpose?: parameters["rowFilter.projects.purpose"];
           what_to_do?: parameters["rowFilter.projects.what_to_do"];
           problems?: parameters["rowFilter.projects.problems"];
@@ -188,6 +187,7 @@ export interface paths {
           needed_help?: parameters["rowFilter.projects.needed_help"];
           project_url?: parameters["rowFilter.projects.project_url"];
           how_to_join?: parameters["rowFilter.projects.how_to_join"];
+          created_at?: parameters["rowFilter.projects.created_at"];
           updated_at?: parameters["rowFilter.projects.updated_at"];
         };
         header: {
@@ -206,7 +206,6 @@ export interface paths {
           id?: parameters["rowFilter.projects.id"];
           owner_user_id?: parameters["rowFilter.projects.owner_user_id"];
           name?: parameters["rowFilter.projects.name"];
-          created_at?: parameters["rowFilter.projects.created_at"];
           purpose?: parameters["rowFilter.projects.purpose"];
           what_to_do?: parameters["rowFilter.projects.what_to_do"];
           problems?: parameters["rowFilter.projects.problems"];
@@ -214,6 +213,7 @@ export interface paths {
           needed_help?: parameters["rowFilter.projects.needed_help"];
           project_url?: parameters["rowFilter.projects.project_url"];
           how_to_join?: parameters["rowFilter.projects.how_to_join"];
+          created_at?: parameters["rowFilter.projects.created_at"];
           updated_at?: parameters["rowFilter.projects.updated_at"];
         };
         body: {
@@ -253,20 +253,16 @@ export interface definitions {
   /** @description Project table */
   projects: {
     /**
-     * Format: bigint
+     * Format: uuid
      * @description Note:
      * This is a Primary Key.<pk/>
+     * @default extensions.uuid_generate_v4()
      */
-    id: number;
+    id: string;
     /** Format: uuid */
     owner_user_id?: string;
     /** Format: character varying */
     name: string;
-    /**
-     * Format: timestamp with time zone
-     * @default now()
-     */
-    created_at?: string;
     /** Format: text */
     purpose?: string;
     /** Format: text */
@@ -281,6 +277,11 @@ export interface definitions {
     project_url?: string;
     /** Format: text */
     how_to_join?: string;
+    /**
+     * Format: timestamp with time zone
+     * @default now()
+     */
+    created_at?: string;
     /**
      * Format: timestamp without time zone
      * @default now()
@@ -336,14 +337,12 @@ export interface parameters {
   "rowFilter.profiles.website": string;
   /** @description projects */
   "body.projects": definitions["projects"];
-  /** Format: bigint */
+  /** Format: uuid */
   "rowFilter.projects.id": string;
   /** Format: uuid */
   "rowFilter.projects.owner_user_id": string;
   /** Format: character varying */
   "rowFilter.projects.name": string;
-  /** Format: timestamp with time zone */
-  "rowFilter.projects.created_at": string;
   /** Format: text */
   "rowFilter.projects.purpose": string;
   /** Format: text */
@@ -358,10 +357,9 @@ export interface parameters {
   "rowFilter.projects.project_url": string;
   /** Format: text */
   "rowFilter.projects.how_to_join": string;
+  /** Format: timestamp with time zone */
+  "rowFilter.projects.created_at": string;
   /** Format: timestamp without time zone */
   "rowFilter.projects.updated_at": string;
 }
 
-export interface operations {}
-
-export interface external {}
