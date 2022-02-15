@@ -10,6 +10,7 @@
     "txjs-push": "source .env.development.local; export TRANSIFEX_TOKEN TRANSIFEX_SECRET; txjs-cli push src/",
     "cypress": "cypress open",
     "cypress:headless": "cypress run"
+    "generate-ts": "source .env.development.local; node_modules/.bin/openapi-typescript ${NEXT_PUBLIC_SUPABASE_URL}/rest/v1/?apikey=${NEXT_PUBLIC_SUPABASE_ANON_KEY} --output types/supabase.ts"
   },
   "dependencies": {
     "@chakra-ui/react": "^1.8.3",
@@ -36,6 +37,7 @@
     "eslint-plugin-cypress": "^2.12.1",
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.28.0",
+    "openapi-typescript": "^5.2.0",
     "prettier": "^2.5.1",
     "typescript": "4.5.5"
   }
