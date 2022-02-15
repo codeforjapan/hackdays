@@ -9,7 +9,7 @@
     "lint:fix": "next lint --fix",
     "txjs-push": "source .env.development.local; export TRANSIFEX_TOKEN TRANSIFEX_SECRET; txjs-cli push src/",
     "cypress": "cypress open",
-    "cypress:headless": "cypress run"
+    "cypress:headless": "cypress run",
     "generate-ts": "source .env.development.local; node_modules/.bin/openapi-typescript ${NEXT_PUBLIC_SUPABASE_URL}/rest/v1/?apikey=${NEXT_PUBLIC_SUPABASE_ANON_KEY} --output types/supabase.ts"
   },
   "dependencies": {
