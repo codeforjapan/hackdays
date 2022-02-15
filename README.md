@@ -81,6 +81,27 @@ You have to use a server instance for checking the features using Storage, ex. P
 
 see [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md)
 
+## Run tests
+
+### Cypress
+
+Cypress is used for End-to-End (E2E) and Integration Testing.
+
+Before you run a test, you have to create `.env.production.local` and copy the contents of `.env.development.local` to it.
+
+> Note: this is because the environmental variables related to Supabase must be defined to build the entire app. We're making the app able to be built without Supabase connected, to run the tests in CI where Supabase may not be configured.
+
+To run Cypress tests, first run `yarn build && yarn start`, and then, in another terminal:
+
+```bash
+yarn cypress
+
+# Or, if you want to run in headless mode that is suitable to Docker
+# yarn cypress:headless
+```
+
+If you want to start the Next.js server and Cypress at the same time, the `start-server-and-test` package will help you. ([Details](https://nextjs.org/docs/testing#running-your-cypress-tests))
+
 ## License
 
 MIT License
