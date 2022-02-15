@@ -102,6 +102,12 @@ yarn cypress
 
 If you want to start the Next.js server and Cypress at the same time, the `start-server-and-test` package will help you. ([Details](https://nextjs.org/docs/testing#running-your-cypress-tests))
 
+### Unit tests (Jest + React Testing Library)
+
+The unit tests are built with Jest and React Testing Library, generally located at `__test__/` directory.
+
+`yarn test` will run the tests in watch mode, where they will be re-run when a file is changed, while `yarn test:ci` will run them only once, which will be best for CI.
+
 ## License
 
 MIT License
