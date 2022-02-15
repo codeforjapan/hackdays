@@ -118,15 +118,15 @@ export interface paths {
           id?: parameters["rowFilter.projects.id"];
           owner_user_id?: parameters["rowFilter.projects.owner_user_id"];
           name?: parameters["rowFilter.projects.name"];
+          created_at?: parameters["rowFilter.projects.created_at"];
           purpose?: parameters["rowFilter.projects.purpose"];
           what_to_do?: parameters["rowFilter.projects.what_to_do"];
-          problem?: parameters["rowFilter.projects.problem"];
+          problems?: parameters["rowFilter.projects.problems"];
           targets?: parameters["rowFilter.projects.targets"];
           needed_help?: parameters["rowFilter.projects.needed_help"];
           project_url?: parameters["rowFilter.projects.project_url"];
           how_to_join?: parameters["rowFilter.projects.how_to_join"];
           updated_at?: parameters["rowFilter.projects.updated_at"];
-          created_at?: parameters["rowFilter.projects.created_at"];
           /** Filtering Columns */
           select?: parameters["select"];
           /** Ordering */
@@ -180,15 +180,15 @@ export interface paths {
           id?: parameters["rowFilter.projects.id"];
           owner_user_id?: parameters["rowFilter.projects.owner_user_id"];
           name?: parameters["rowFilter.projects.name"];
+          created_at?: parameters["rowFilter.projects.created_at"];
           purpose?: parameters["rowFilter.projects.purpose"];
           what_to_do?: parameters["rowFilter.projects.what_to_do"];
-          problem?: parameters["rowFilter.projects.problem"];
+          problems?: parameters["rowFilter.projects.problems"];
           targets?: parameters["rowFilter.projects.targets"];
           needed_help?: parameters["rowFilter.projects.needed_help"];
           project_url?: parameters["rowFilter.projects.project_url"];
           how_to_join?: parameters["rowFilter.projects.how_to_join"];
           updated_at?: parameters["rowFilter.projects.updated_at"];
-          created_at?: parameters["rowFilter.projects.created_at"];
         };
         header: {
           /** Preference */
@@ -206,15 +206,15 @@ export interface paths {
           id?: parameters["rowFilter.projects.id"];
           owner_user_id?: parameters["rowFilter.projects.owner_user_id"];
           name?: parameters["rowFilter.projects.name"];
+          created_at?: parameters["rowFilter.projects.created_at"];
           purpose?: parameters["rowFilter.projects.purpose"];
           what_to_do?: parameters["rowFilter.projects.what_to_do"];
-          problem?: parameters["rowFilter.projects.problem"];
+          problems?: parameters["rowFilter.projects.problems"];
           targets?: parameters["rowFilter.projects.targets"];
           needed_help?: parameters["rowFilter.projects.needed_help"];
           project_url?: parameters["rowFilter.projects.project_url"];
           how_to_join?: parameters["rowFilter.projects.how_to_join"];
           updated_at?: parameters["rowFilter.projects.updated_at"];
-          created_at?: parameters["rowFilter.projects.created_at"];
         };
         body: {
           /** projects */
@@ -250,24 +250,29 @@ export interface definitions {
     /** Format: text */
     website?: string;
   };
-  /** @description Projects table */
+  /** @description Project table */
   projects: {
     /**
-     * Format: uuid
+     * Format: bigint
      * @description Note:
      * This is a Primary Key.<pk/>
      */
-    id: string;
+    id: number;
     /** Format: uuid */
     owner_user_id?: string;
     /** Format: character varying */
     name: string;
+    /**
+     * Format: timestamp with time zone
+     * @default now()
+     */
+    created_at?: string;
     /** Format: text */
     purpose?: string;
     /** Format: text */
     what_to_do?: string;
     /** Format: text */
-    problem?: string;
+    problems?: string;
     /** Format: text */
     targets?: string;
     /** Format: text */
@@ -281,11 +286,6 @@ export interface definitions {
      * @default now()
      */
     updated_at?: string;
-    /**
-     * Format: timestamp with time zone
-     * @default now()
-     */
-    created_at?: string;
   };
 }
 
@@ -336,18 +336,20 @@ export interface parameters {
   "rowFilter.profiles.website": string;
   /** @description projects */
   "body.projects": definitions["projects"];
-  /** Format: uuid */
+  /** Format: bigint */
   "rowFilter.projects.id": string;
   /** Format: uuid */
   "rowFilter.projects.owner_user_id": string;
   /** Format: character varying */
   "rowFilter.projects.name": string;
+  /** Format: timestamp with time zone */
+  "rowFilter.projects.created_at": string;
   /** Format: text */
   "rowFilter.projects.purpose": string;
   /** Format: text */
   "rowFilter.projects.what_to_do": string;
   /** Format: text */
-  "rowFilter.projects.problem": string;
+  "rowFilter.projects.problems": string;
   /** Format: text */
   "rowFilter.projects.targets": string;
   /** Format: text */
@@ -358,7 +360,8 @@ export interface parameters {
   "rowFilter.projects.how_to_join": string;
   /** Format: timestamp without time zone */
   "rowFilter.projects.updated_at": string;
-  /** Format: timestamp with time zone */
-  "rowFilter.projects.created_at": string;
 }
 
+export interface operations {}
+
+export interface external {}
