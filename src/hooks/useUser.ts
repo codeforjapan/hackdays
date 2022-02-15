@@ -2,7 +2,7 @@ import { Session } from "@supabase/supabase-js";
 import { useEffect, useState } from "react";
 import { supabase } from "../utils/supabaseClient";
 
-export default function userUser() {
+export default function useUser() {
   const [session, setSession] = useState<Session>();
 
   useEffect(() => {
