@@ -9,7 +9,8 @@
   ],
   "plugins": [
     "@typescript-eslint",
-    "react"
+    "react",
+    "testing-library"
   ],
   "parser": "@typescript-eslint/parser",
   "env": {
@@ -31,5 +32,15 @@
     "react": {
       "version": "detect"
     }
-  }
+  },
+  "overrides": [
+    // Only uses Testing Library lint rules in test files
+    {
+      "files": [
+        "**/__tests__/**/*.[jt]s?(x)",
+        "**/?(*.)+(spec|test).[jt]s?(x)"
+      ],
+      "extends": ["plugin:testing-library/react"]
+    }
+  ]
 }
