@@ -5,6 +5,7 @@ import { PrimaryButton } from './atoms/button/PrimaryButton';
 import { useRouter } from 'next/router';
 import { definitions } from '../../types/supabase';
 import { PostgrestResponse } from '@supabase/supabase-js';
+import { ProjectService } from '../services/projects.service';
 
 export default function ProjectForm() {
   const [loading, setLoading] = useState<boolean>(false);
@@ -29,13 +30,7 @@ export default function ProjectForm() {
         owner_user_id: user?.id,
         name: projectname,
       };
-
-      const { data, error }: PostgrestResponse<definitions['projects']> = await supabase
-        .from('projects')
-        .insert([newdata]);
-      if (error) {
-        throw error;
-      }
+      const data = await ProjectService.createProject(newdata);
       if (!data) {
         throw new Error("can't create data");
       }

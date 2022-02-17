@@ -2,32 +2,23 @@ import { PostgrestResponse } from '@supabase/supabase-js';
 import { useEffect, useState } from 'react';
 import { definitions } from '../../types/supabase';
 import { supabase } from '../utils/supabaseClient';
+import { ProjectService } from '../services/projects.service';
 import { Box, ListItem, UnorderedList } from '@chakra-ui/react';
 
 export default function SProject({ projectid }: { projectid: string }) {
   const [project, setSProject] = useState<definitions['projects'] | null>();
 
   useEffect(() => {
-    getProject(projectid);
-  }, []);
-  async function getProject(projectid: string) {
-    console.log(projectid);
     try {
-      const { data, error }: PostgrestResponse<definitions['projects']> = await supabase
-        .from('projects')
-        .select()
-        .eq('id', projectid);
-      if (error) {
-        throw error;
+      const prject = ProjectService.getProject(projectid);
+      if (!prject) {
+        throw new Error("can't get data");
       }
-      if (!data) {
-        throw new Error("can't create data");
-      }
-      setSProject(data[0]);
+      setSProject(project);
     } catch (error: unknown) {
       alert((error as Error).message);
     }
-  }
+  }, []);
   return (
     <Box shadow='md'>
       <UnorderedList>
