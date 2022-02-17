@@ -21,9 +21,9 @@ export default function Projects() {
   return (
     <Flex align='center' justify='center' height='100vh'>
       <List>
-        {projects?.map((value, i) => {
+        {projects?.map((value) => {
           return (
-            <ListItem>
+            <ListItem key={value.id}>
               <Link href={'/projects/' + value.id}>{value.name}</Link>
             </ListItem>
           );
