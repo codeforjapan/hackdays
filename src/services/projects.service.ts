@@ -3,9 +3,30 @@ import { definitions } from '../../types/supabase';
 import { supabase } from "../utils/supabaseClient";
 
 export const ProjectService = {
+  getProjects,
   getProject,
   createProject
 }
+async function getProjects(limit = 30) {
+  try {
+    const { data, error }: PostgrestResponse<definitions['projects']> = await supabase
+      .from('projects')
+      .select()
+      .order('id', { ascending: false })
+      .limit(limit)
+
+    if (error) {
+      throw error;
+    }
+    if (!data) {
+      throw new Error("can't retlieve data");
+    }
+    return data
+  } catch (error: unknown) {
+    throw error
+  }
+}
+
 async function getProject(projectid: string) {
   console.log(projectid);
   try {
@@ -13,6 +34,7 @@ async function getProject(projectid: string) {
       .from('projects')
       .select()
       .eq('id', projectid);
+    console.log(data)
     if (error) {
       throw error;
     }

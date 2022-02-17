@@ -9,16 +9,19 @@ export default function SProject({ projectid }: { projectid: string }) {
   const [project, setSProject] = useState<definitions['projects'] | null>();
 
   useEffect(() => {
+    getProject(projectid);
+  }, []);
+  async function getProject(projectid: string) {
     try {
-      const prject = ProjectService.getProject(projectid);
-      if (!prject) {
+      const data = await ProjectService.getProject(projectid);
+      if (!data) {
         throw new Error("can't get data");
       }
-      setSProject(project);
+      setSProject(data);
     } catch (error: unknown) {
       alert((error as Error).message);
     }
-  }, []);
+  }
   return (
     <Box shadow='md'>
       <UnorderedList>
