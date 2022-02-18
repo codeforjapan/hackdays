@@ -1,10 +1,10 @@
 import { PostgrestResponse } from '@supabase/supabase-js';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { definitions } from '../../types/supabase';
 import { supabase } from '../utils/supabaseClient';
 import { ProjectService } from '../services/projects.service';
 import { Box, Editable, Heading, ListItem, Stack, UnorderedList } from '@chakra-ui/react';
-import { EditableProperty } from './atoms/EditableProperty';
+import { EditableProperty, onUpdatePropFunction } from './atoms/EditableProperty';
 
 export default function SProject({ projectid }: { projectid: string }) {
   const [project, setSProject] = useState<definitions['projects'] | null>();
@@ -12,9 +12,32 @@ export default function SProject({ projectid }: { projectid: string }) {
   useEffect(() => {
     getProject(projectid);
   }, []);
-  async function editProject(key: any, nextValue: any) {
-    console.log(key, nextValue);
-  }
+  type EditableProp =
+    | 'name'
+    | 'purpose'
+    | 'what_to_do'
+    | 'problems'
+    | 'targets'
+    | 'needed_help'
+    | 'project_url'
+    | 'how_to_join';
+  const editProject: onUpdatePropFunction = async (property: string, nextValue: string) => {
+    if (project) {
+      const k: EditableProp = property as EditableProp;
+      project[k] = nextValue;
+      await ProjectService.updateProject(project)
+        .then((data) => {
+          console.log(data);
+          if (!data) {
+            throw new Error("can't get data");
+          }
+          setSProject(data);
+        })
+        .catch((error: unknown) => {
+          throw error;
+        });
+    }
+  };
   async function getProject(projectid: string) {
     try {
       const user = supabase.auth.user();
@@ -29,17 +52,15 @@ export default function SProject({ projectid }: { projectid: string }) {
     }
   }
   return (
-    <Box shadow='md'>
-      <Stack spacing={4}>
-        <Heading as='h1'>{project ? project.name : ''}</Heading>
-        <EditableProperty
-          label='purpose'
-          data={project}
-          property='purpose'
-          onUpdateProp={editProject}
-          editable={editable}
-        />
-      </Stack>
-    </Box>
+    <Stack spacing={4}>
+      <Heading as='h1'>{project ? project.name : ''}</Heading>
+      <EditableProperty
+        label='purpose'
+        data={project?.purpose}
+        property='purpose'
+        onUpdateProp={editProject}
+        editable={editable}
+      />
+    </Stack>
   );
 }
