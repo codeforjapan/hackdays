@@ -5,7 +5,8 @@ import { supabase } from "../utils/supabaseClient";
 export const ProjectService = {
   getProjects,
   getProject,
-  createProject
+  createProject,
+  updateProject
 }
 async function getProjects(limit = 30) {
   try {
@@ -28,18 +29,32 @@ async function getProjects(limit = 30) {
 }
 
 async function getProject(projectid: string) {
-  console.log(projectid);
   try {
     const { data, error }: PostgrestResponse<definitions['projects']> = await supabase
       .from('projects')
       .select()
       .eq('id', projectid);
-    console.log(data)
     if (error) {
       throw error;
     }
     if (!data) {
       throw new Error("can't create data");
+    }
+    return data[0]
+  } catch (error: unknown) {
+    throw error
+  }
+}
+async function updateProject(project: definitions['projects']) {
+  try {
+    const { data, error }: PostgrestResponse<definitions['projects']> = await supabase
+      .from('projects')
+      .upsert(project)
+    if (error) {
+      throw error;
+    }
+    if (!data) {
+      throw new Error("can't update data");
     }
     return data[0]
   } catch (error: unknown) {

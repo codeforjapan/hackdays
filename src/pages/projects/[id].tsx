@@ -1,4 +1,4 @@
-import { Flex } from '@chakra-ui/react';
+import { Box, Flex } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import SProject from '../../components/SProject';
 export default function Project() {
@@ -6,7 +6,9 @@ export default function Project() {
   const { id } = router.query;
   return (
     <Flex align='center' justify='center' height='100vh'>
-      {id ? <SProject projectid={String(id)} /> : ''}
+      <Box bg='white' margin={4} p={4}>
+        {id ? <SProject projectid={String(id)} /> : ''}
+      </Box>
     </Flex>
   );
 }
