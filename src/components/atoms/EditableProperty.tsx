@@ -9,6 +9,7 @@ import {
   Heading,
   IconButton,
   Text,
+  useControllableState,
   useEditableControls,
 } from '@chakra-ui/react';
 import { NextServer } from 'next/dist/server/next';
@@ -20,7 +21,7 @@ export type onUpdatePropFunction = (property: string, nextvalue: string) => Prom
 type Props = {
   label: string;
   property: string;
-  data: string | null | undefined;
+  defaultValue: string | null | undefined;
   onUpdateProp: onUpdatePropFunction;
   editable?: boolean;
   disabled?: boolean;
@@ -41,12 +42,12 @@ function EditableControls({ ariaLabel }: { ariaLabel: string }) {
   );
 }
 
-export const EditableProperty: VFC<Props> = memo(function foo(props: Props) {
-  const { label, property, data, onUpdateProp, editable = false, disabled = false, loading = false } = props;
+export const EditableProperty: VFC<Props> = function foo(props: Props) {
+  const { label, property, defaultValue, onUpdateProp, editable = false, disabled = false, loading = false } = props;
   const [value, setValue] = useState('');
   const [msg, setErrorMessage] = useState('');
   function canceled(previousValue: string) {
-    setValue(previousValue);
+    setValue(defaultValue ? defaultValue : '');
   }
   function submit(newvalue: string) {
     setErrorMessage('');
@@ -58,8 +59,8 @@ export const EditableProperty: VFC<Props> = memo(function foo(props: Props) {
       });
   }
   useEffect(() => {
-    setValue(data ? data : '');
-  }, []);
+    setValue(defaultValue ? defaultValue : '');
+  }, [defaultValue]);
 
   return (
     <Box>
@@ -67,7 +68,7 @@ export const EditableProperty: VFC<Props> = memo(function foo(props: Props) {
       <Text color='red.300'>{msg}</Text>
       {editable ? (
         <Editable
-          defaultValue={value}
+          value={value}
           isPreviewFocusable={false}
           onCancel={(pv: string) => {
             canceled(pv);
@@ -75,6 +76,10 @@ export const EditableProperty: VFC<Props> = memo(function foo(props: Props) {
           onSubmit={(v: string) => {
             submit(v);
           }}
+          onChange={(t: string) => {
+            setValue(t);
+          }}
+          submitOnBlur={false}
         >
           <EditablePreview />
           <EditableInput />
@@ -85,4 +90,4 @@ export const EditableProperty: VFC<Props> = memo(function foo(props: Props) {
       )}
     </Box>
   );
-});
+};

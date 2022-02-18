@@ -56,7 +56,7 @@ export default function SProject({ projectid }: { projectid: string }) {
       <Heading as='h1'>{project ? project.name : ''}</Heading>
       <EditableProperty
         label='purpose'
-        data={project?.purpose}
+        defaultValue={project?.purpose}
         property='purpose'
         onUpdateProp={editProject}
         editable={editable}

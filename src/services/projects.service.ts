@@ -49,7 +49,7 @@ async function updateProject(project: definitions['projects']) {
   try {
     const { data, error }: PostgrestResponse<definitions['projects']> = await supabase
       .from('projects')
-      .update(project)
+      .upsert(project)
     if (error) {
       throw error;
     }
