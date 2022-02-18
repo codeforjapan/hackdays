@@ -14,7 +14,7 @@ import {
 } from '@chakra-ui/react';
 import { NextServer } from 'next/dist/server/next';
 import { nextTick } from 'process';
-import { memo, useEffect, useState, VFC } from 'react';
+import { KeyboardEventHandler, memo, useEffect, useState, VFC } from 'react';
 
 export type onUpdatePropFunction = (property: string, nextvalue: string) => Promise<void>;
 
@@ -45,6 +45,7 @@ function EditableControls({ ariaLabel }: { ariaLabel: string }) {
 export const EditableProperty: VFC<Props> = function foo(props: Props) {
   const { label, property, defaultValue, onUpdateProp, editable = false, disabled = false, loading = false } = props;
   const [value, setValue] = useState('');
+  const [typing, setTyping] = useState(false);
   const [msg, setErrorMessage] = useState('');
   function canceled(previousValue: string) {
     setValue(defaultValue ? defaultValue : '');
@@ -82,7 +83,16 @@ export const EditableProperty: VFC<Props> = function foo(props: Props) {
           submitOnBlur={false}
         >
           <EditablePreview />
-          <EditableInput />
+          <EditableInput
+            onCompositionStart={() => setTyping(true)}
+            onCompositionEnd={() => setTyping(false)}
+            onKeyDown={(e) => {
+              // disable Enter key during using IME
+              if (e.key == 'Enter' && typing) {
+                e.preventDefault();
+              }
+            }}
+          />
           <EditableControls ariaLabel={label} />
         </Editable>
       ) : (
