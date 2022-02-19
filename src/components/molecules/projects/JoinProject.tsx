@@ -2,6 +2,7 @@ import { FC, useEffect, useRef, useState } from 'react';
 import { ProjectService } from '../../../services/projects.service';
 import { supabase } from '../../../utils/supabaseClient';
 import { PrimaryButton } from '../../atoms/button/PrimaryButton';
+import { useT } from '@transifex/react';
 
 type Props = {
   joined?: boolean;
@@ -11,7 +12,7 @@ type Props = {
 const MJoinProject: FC<Props> = ({ joined = false, project_id }) => {
   const [isJoined, setIsJoined] = useState(joined);
   const requesting = useRef(false);
-
+  const t = useT();
   useEffect(() => {
     setIsJoined(joined);
   }, [joined]);
@@ -41,7 +42,7 @@ const MJoinProject: FC<Props> = ({ joined = false, project_id }) => {
 
   return (
     <PrimaryButton onClick={() => handleClick()}>
-      {isJoined ? 'プロジェクトを抜ける' : 'プロジェクトに参加する'}
+      {isJoined ? t('Leave this project') : t('Join this project')}
     </PrimaryButton>
   );
 };

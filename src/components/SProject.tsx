@@ -63,11 +63,11 @@ export default function SProject({ projectid }: { projectid: string }) {
     const labels: { [name: string]: string } = {
       purpose: t('Purpose'),
       what_to_do: t('What to do'),
-      problems: 'Problems',
-      targets: 'Targets',
-      needed_help: 'Needed help',
-      project_url: 'Project URL',
-      how_to_join: 'How to join',
+      problems: t('Problems'),
+      targets: t('Targets'),
+      needed_help: t('Needed help'),
+      project_url: t('Project URL'),
+      how_to_join: t('How to join'),
     };
     return labels[String(key)];
   };
