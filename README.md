@@ -66,7 +66,7 @@ yarn dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can access [Supabase studio](https://github.com/supabase/supabase/tree/master/studio) via [http://localhost:54323/](http://localhost:54323/).
+You can access [Supabase Studio](https://github.com/supabase/supabase/tree/master/studio) via [http://localhost:54323/](http://localhost:54323/), that provides the dashboard where you can check various type of information such as database and Supabase Auth.
 
 Also, you can access email logs ([inbucket](https://github.com/inbucket/inbucket)) via [http://localhost:54324/](http://localhost:54324/).
 

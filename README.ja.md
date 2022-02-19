@@ -66,7 +66,7 @@ yarn dev
 
 ブラウザで [http://localhost:3000](http://localhost:3000) を開くと結果が見える。
 
-[http://localhost:54323/](http://localhost:54323/) で [Supabase Studio](https://github.com/supabase/supabase/tree/master/studio) にアクセスできる。
+[http://localhost:54323/](http://localhost:54323/) で [Supabase Studio](https://github.com/supabase/supabase/tree/master/studio) にアクセスでき、データベースや Supabase Auth など各種情報を確認できる。
 
 [http://localhost:54324/](http://localhost:54324/) で メールログ（[inbucket](https://github.com/inbucket/inbucket)）にもアクセスできる。
 
