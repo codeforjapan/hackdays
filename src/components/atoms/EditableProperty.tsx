@@ -9,12 +9,9 @@ import {
   Heading,
   IconButton,
   Text,
-  useControllableState,
   useEditableControls,
 } from '@chakra-ui/react';
-import { NextServer } from 'next/dist/server/next';
-import { nextTick } from 'process';
-import { KeyboardEventHandler, memo, useEffect, useState, VFC } from 'react';
+import { useEffect, useState, VFC } from 'react';
 
 export type onUpdatePropFunction = (property: string, nextvalue: string) => Promise<void>;
 
@@ -43,11 +40,12 @@ function EditableControls({ ariaLabel }: { ariaLabel: string }) {
 }
 
 export const EditableProperty: VFC<Props> = function foo(props: Props) {
-  const { label, property, defaultValue, onUpdateProp, editable = false, disabled = false, loading = false } = props;
+  const { label, property, defaultValue, editable = false } = props;
   const [value, setValue] = useState('');
   const [typing, setTyping] = useState(false);
   const [msg, setErrorMessage] = useState('');
   function canceled(previousValue: string) {
+    console.log(previousValue); //not use が出るので一旦consolelogで抜ける
     setValue(defaultValue ? defaultValue : '');
   }
   function submit(newvalue: string) {
