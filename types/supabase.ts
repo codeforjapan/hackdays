@@ -4,7 +4,7 @@
  */
 
 export interface paths {
-  "/": {
+  '/': {
     get: {
       responses: {
         /** OK */
@@ -12,37 +12,37 @@ export interface paths {
       };
     };
   };
-  "/profiles": {
+  '/profiles': {
     get: {
       parameters: {
         query: {
-          id?: parameters["rowFilter.profiles.id"];
-          updated_at?: parameters["rowFilter.profiles.updated_at"];
-          username?: parameters["rowFilter.profiles.username"];
-          avatar_url?: parameters["rowFilter.profiles.avatar_url"];
-          website?: parameters["rowFilter.profiles.website"];
+          id?: parameters['rowFilter.profiles.id'];
+          updated_at?: parameters['rowFilter.profiles.updated_at'];
+          username?: parameters['rowFilter.profiles.username'];
+          avatar_url?: parameters['rowFilter.profiles.avatar_url'];
+          website?: parameters['rowFilter.profiles.website'];
           /** Filtering Columns */
-          select?: parameters["select"];
+          select?: parameters['select'];
           /** Ordering */
-          order?: parameters["order"];
+          order?: parameters['order'];
           /** Limiting and Pagination */
-          offset?: parameters["offset"];
+          offset?: parameters['offset'];
           /** Limiting and Pagination */
-          limit?: parameters["limit"];
+          limit?: parameters['limit'];
         };
         header: {
           /** Limiting and Pagination */
-          Range?: parameters["range"];
+          Range?: parameters['range'];
           /** Limiting and Pagination */
-          "Range-Unit"?: parameters["rangeUnit"];
+          'Range-Unit'?: parameters['rangeUnit'];
           /** Preference */
-          Prefer?: parameters["preferCount"];
+          Prefer?: parameters['preferCount'];
         };
       };
       responses: {
         /** OK */
         200: {
-          schema: definitions["profiles"][];
+          schema: definitions['profiles'][];
         };
         /** Partial Content */
         206: unknown;
@@ -52,15 +52,15 @@ export interface paths {
       parameters: {
         body: {
           /** profiles */
-          profiles?: definitions["profiles"];
+          profiles?: definitions['profiles'];
         };
         query: {
           /** Filtering Columns */
-          select?: parameters["select"];
+          select?: parameters['select'];
         };
         header: {
           /** Preference */
-          Prefer?: parameters["preferReturn"];
+          Prefer?: parameters['preferReturn'];
         };
       };
       responses: {
@@ -71,15 +71,15 @@ export interface paths {
     delete: {
       parameters: {
         query: {
-          id?: parameters["rowFilter.profiles.id"];
-          updated_at?: parameters["rowFilter.profiles.updated_at"];
-          username?: parameters["rowFilter.profiles.username"];
-          avatar_url?: parameters["rowFilter.profiles.avatar_url"];
-          website?: parameters["rowFilter.profiles.website"];
+          id?: parameters['rowFilter.profiles.id'];
+          updated_at?: parameters['rowFilter.profiles.updated_at'];
+          username?: parameters['rowFilter.profiles.username'];
+          avatar_url?: parameters['rowFilter.profiles.avatar_url'];
+          website?: parameters['rowFilter.profiles.website'];
         };
         header: {
           /** Preference */
-          Prefer?: parameters["preferReturn"];
+          Prefer?: parameters['preferReturn'];
         };
       };
       responses: {
@@ -90,19 +90,19 @@ export interface paths {
     patch: {
       parameters: {
         query: {
-          id?: parameters["rowFilter.profiles.id"];
-          updated_at?: parameters["rowFilter.profiles.updated_at"];
-          username?: parameters["rowFilter.profiles.username"];
-          avatar_url?: parameters["rowFilter.profiles.avatar_url"];
-          website?: parameters["rowFilter.profiles.website"];
+          id?: parameters['rowFilter.profiles.id'];
+          updated_at?: parameters['rowFilter.profiles.updated_at'];
+          username?: parameters['rowFilter.profiles.username'];
+          avatar_url?: parameters['rowFilter.profiles.avatar_url'];
+          website?: parameters['rowFilter.profiles.website'];
         };
         body: {
           /** profiles */
-          profiles?: definitions["profiles"];
+          profiles?: definitions['profiles'];
         };
         header: {
           /** Preference */
-          Prefer?: parameters["preferReturn"];
+          Prefer?: parameters['preferReturn'];
         };
       };
       responses: {
@@ -111,44 +111,44 @@ export interface paths {
       };
     };
   };
-  "/projects": {
+  '/projects': {
     get: {
       parameters: {
         query: {
-          id?: parameters["rowFilter.projects.id"];
-          owner_user_id?: parameters["rowFilter.projects.owner_user_id"];
-          name?: parameters["rowFilter.projects.name"];
-          purpose?: parameters["rowFilter.projects.purpose"];
-          what_to_do?: parameters["rowFilter.projects.what_to_do"];
-          problems?: parameters["rowFilter.projects.problems"];
-          targets?: parameters["rowFilter.projects.targets"];
-          needed_help?: parameters["rowFilter.projects.needed_help"];
-          project_url?: parameters["rowFilter.projects.project_url"];
-          how_to_join?: parameters["rowFilter.projects.how_to_join"];
-          created_at?: parameters["rowFilter.projects.created_at"];
-          updated_at?: parameters["rowFilter.projects.updated_at"];
+          id?: parameters['rowFilter.projects.id'];
+          owner_user_id?: parameters['rowFilter.projects.owner_user_id'];
+          name?: parameters['rowFilter.projects.name'];
+          purpose?: parameters['rowFilter.projects.purpose'];
+          what_to_do?: parameters['rowFilter.projects.what_to_do'];
+          problems?: parameters['rowFilter.projects.problems'];
+          targets?: parameters['rowFilter.projects.targets'];
+          needed_help?: parameters['rowFilter.projects.needed_help'];
+          project_url?: parameters['rowFilter.projects.project_url'];
+          how_to_join?: parameters['rowFilter.projects.how_to_join'];
+          created_at?: parameters['rowFilter.projects.created_at'];
+          updated_at?: parameters['rowFilter.projects.updated_at'];
           /** Filtering Columns */
-          select?: parameters["select"];
+          select?: parameters['select'];
           /** Ordering */
-          order?: parameters["order"];
+          order?: parameters['order'];
           /** Limiting and Pagination */
-          offset?: parameters["offset"];
+          offset?: parameters['offset'];
           /** Limiting and Pagination */
-          limit?: parameters["limit"];
+          limit?: parameters['limit'];
         };
         header: {
           /** Limiting and Pagination */
-          Range?: parameters["range"];
+          Range?: parameters['range'];
           /** Limiting and Pagination */
-          "Range-Unit"?: parameters["rangeUnit"];
+          'Range-Unit'?: parameters['rangeUnit'];
           /** Preference */
-          Prefer?: parameters["preferCount"];
+          Prefer?: parameters['preferCount'];
         };
       };
       responses: {
         /** OK */
         200: {
-          schema: definitions["projects"][];
+          schema: definitions['projects'][];
         };
         /** Partial Content */
         206: unknown;
@@ -158,15 +158,15 @@ export interface paths {
       parameters: {
         body: {
           /** projects */
-          projects?: definitions["projects"];
+          projects?: definitions['projects'];
         };
         query: {
           /** Filtering Columns */
-          select?: parameters["select"];
+          select?: parameters['select'];
         };
         header: {
           /** Preference */
-          Prefer?: parameters["preferReturn"];
+          Prefer?: parameters['preferReturn'];
         };
       };
       responses: {
@@ -177,22 +177,22 @@ export interface paths {
     delete: {
       parameters: {
         query: {
-          id?: parameters["rowFilter.projects.id"];
-          owner_user_id?: parameters["rowFilter.projects.owner_user_id"];
-          name?: parameters["rowFilter.projects.name"];
-          purpose?: parameters["rowFilter.projects.purpose"];
-          what_to_do?: parameters["rowFilter.projects.what_to_do"];
-          problems?: parameters["rowFilter.projects.problems"];
-          targets?: parameters["rowFilter.projects.targets"];
-          needed_help?: parameters["rowFilter.projects.needed_help"];
-          project_url?: parameters["rowFilter.projects.project_url"];
-          how_to_join?: parameters["rowFilter.projects.how_to_join"];
-          created_at?: parameters["rowFilter.projects.created_at"];
-          updated_at?: parameters["rowFilter.projects.updated_at"];
+          id?: parameters['rowFilter.projects.id'];
+          owner_user_id?: parameters['rowFilter.projects.owner_user_id'];
+          name?: parameters['rowFilter.projects.name'];
+          purpose?: parameters['rowFilter.projects.purpose'];
+          what_to_do?: parameters['rowFilter.projects.what_to_do'];
+          problems?: parameters['rowFilter.projects.problems'];
+          targets?: parameters['rowFilter.projects.targets'];
+          needed_help?: parameters['rowFilter.projects.needed_help'];
+          project_url?: parameters['rowFilter.projects.project_url'];
+          how_to_join?: parameters['rowFilter.projects.how_to_join'];
+          created_at?: parameters['rowFilter.projects.created_at'];
+          updated_at?: parameters['rowFilter.projects.updated_at'];
         };
         header: {
           /** Preference */
-          Prefer?: parameters["preferReturn"];
+          Prefer?: parameters['preferReturn'];
         };
       };
       responses: {
@@ -203,26 +203,26 @@ export interface paths {
     patch: {
       parameters: {
         query: {
-          id?: parameters["rowFilter.projects.id"];
-          owner_user_id?: parameters["rowFilter.projects.owner_user_id"];
-          name?: parameters["rowFilter.projects.name"];
-          purpose?: parameters["rowFilter.projects.purpose"];
-          what_to_do?: parameters["rowFilter.projects.what_to_do"];
-          problems?: parameters["rowFilter.projects.problems"];
-          targets?: parameters["rowFilter.projects.targets"];
-          needed_help?: parameters["rowFilter.projects.needed_help"];
-          project_url?: parameters["rowFilter.projects.project_url"];
-          how_to_join?: parameters["rowFilter.projects.how_to_join"];
-          created_at?: parameters["rowFilter.projects.created_at"];
-          updated_at?: parameters["rowFilter.projects.updated_at"];
+          id?: parameters['rowFilter.projects.id'];
+          owner_user_id?: parameters['rowFilter.projects.owner_user_id'];
+          name?: parameters['rowFilter.projects.name'];
+          purpose?: parameters['rowFilter.projects.purpose'];
+          what_to_do?: parameters['rowFilter.projects.what_to_do'];
+          problems?: parameters['rowFilter.projects.problems'];
+          targets?: parameters['rowFilter.projects.targets'];
+          needed_help?: parameters['rowFilter.projects.needed_help'];
+          project_url?: parameters['rowFilter.projects.project_url'];
+          how_to_join?: parameters['rowFilter.projects.how_to_join'];
+          created_at?: parameters['rowFilter.projects.created_at'];
+          updated_at?: parameters['rowFilter.projects.updated_at'];
         };
         body: {
           /** projects */
-          projects?: definitions["projects"];
+          projects?: definitions['projects'];
         };
         header: {
           /** Preference */
-          Prefer?: parameters["preferReturn"];
+          Prefer?: parameters['preferReturn'];
         };
       };
       responses: {
@@ -287,6 +287,7 @@ export interface definitions {
      * @default now()
      */
     updated_at?: string;
+    profiles?: definitions['profiles'][];
   };
 }
 
@@ -295,17 +296,17 @@ export interface parameters {
    * @description Preference
    * @enum {string}
    */
-  preferParams: "params=single-object";
+  preferParams: 'params=single-object';
   /**
    * @description Preference
    * @enum {string}
    */
-  preferReturn: "return=representation" | "return=minimal" | "return=none";
+  preferReturn: 'return=representation' | 'return=minimal' | 'return=none';
   /**
    * @description Preference
    * @enum {string}
    */
-  preferCount: "count=none";
+  preferCount: 'count=none';
   /** @description Filtering Columns */
   select: string;
   /** @description On Conflict */
@@ -324,42 +325,41 @@ export interface parameters {
   /** @description Limiting and Pagination */
   limit: string;
   /** @description profiles */
-  "body.profiles": definitions["profiles"];
+  'body.profiles': definitions['profiles'];
   /** Format: uuid */
-  "rowFilter.profiles.id": string;
+  'rowFilter.profiles.id': string;
   /** Format: timestamp with time zone */
-  "rowFilter.profiles.updated_at": string;
+  'rowFilter.profiles.updated_at': string;
   /** Format: text */
-  "rowFilter.profiles.username": string;
+  'rowFilter.profiles.username': string;
   /** Format: text */
-  "rowFilter.profiles.avatar_url": string;
+  'rowFilter.profiles.avatar_url': string;
   /** Format: text */
-  "rowFilter.profiles.website": string;
+  'rowFilter.profiles.website': string;
   /** @description projects */
-  "body.projects": definitions["projects"];
+  'body.projects': definitions['projects'];
   /** Format: uuid */
-  "rowFilter.projects.id": string;
+  'rowFilter.projects.id': string;
   /** Format: uuid */
-  "rowFilter.projects.owner_user_id": string;
+  'rowFilter.projects.owner_user_id': string;
   /** Format: character varying */
-  "rowFilter.projects.name": string;
+  'rowFilter.projects.name': string;
   /** Format: text */
-  "rowFilter.projects.purpose": string;
+  'rowFilter.projects.purpose': string;
   /** Format: text */
-  "rowFilter.projects.what_to_do": string;
+  'rowFilter.projects.what_to_do': string;
   /** Format: text */
-  "rowFilter.projects.problems": string;
+  'rowFilter.projects.problems': string;
   /** Format: text */
-  "rowFilter.projects.targets": string;
+  'rowFilter.projects.targets': string;
   /** Format: text */
-  "rowFilter.projects.needed_help": string;
+  'rowFilter.projects.needed_help': string;
   /** Format: character varying */
-  "rowFilter.projects.project_url": string;
+  'rowFilter.projects.project_url': string;
   /** Format: text */
-  "rowFilter.projects.how_to_join": string;
+  'rowFilter.projects.how_to_join': string;
   /** Format: timestamp with time zone */
-  "rowFilter.projects.created_at": string;
+  'rowFilter.projects.created_at': string;
   /** Format: timestamp without time zone */
-  "rowFilter.projects.updated_at": string;
+  'rowFilter.projects.updated_at': string;
 }
-
