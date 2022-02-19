@@ -20,7 +20,7 @@ The password should be `percent-encoded`.
 
 ```bash
 supabase db remote set 'postgresql://postgres:[YOUR-PASSWORD]@db.[YOUR_INSTANCE].supabase.co:5432/postgres'
-supabase db remote push
+supabase db push
 supabase db remote commit
 ```
 
