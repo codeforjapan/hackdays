@@ -1,6 +1,6 @@
 import { PostgrestResponse } from '@supabase/supabase-js';
 import { useEffect, useState, useCallback } from 'react';
-import { definitions } from '../../types/supabase';
+import { definitions } from '../types/supabase';
 import { supabase } from '../utils/supabaseClient';
 import { ProjectService } from '../services/projects.service';
 import { Box, Editable, Heading, ListItem, Stack, UnorderedList } from '@chakra-ui/react';

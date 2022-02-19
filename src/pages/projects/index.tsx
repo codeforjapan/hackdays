@@ -1,6 +1,6 @@
 import { Flex, Link, List, ListItem } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
-import { definitions } from '../../../types/supabase';
+import { definitions } from '../../types/supabase';
 import { ProjectService } from '../../services/projects.service';
 export default function Projects() {
   const [projects, setProjects] = useState<definitions['projects'][] | null>();
