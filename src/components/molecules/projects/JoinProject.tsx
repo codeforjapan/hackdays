@@ -1,4 +1,4 @@
-import { FC, useRef, useState } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 import { ProjectService } from '../../../services/projects.service';
 import { supabase } from '../../../utils/supabaseClient';
 import { PrimaryButton } from '../../atoms/button/PrimaryButton';
@@ -11,6 +11,10 @@ type Props = {
 const MJoinProject: FC<Props> = ({ joined = false, project_id }) => {
   const [isJoined, setIsJoined] = useState(joined);
   const requesting = useRef(false);
+
+  useEffect(() => {
+    setIsJoined(joined);
+  }, [joined]);
 
   const handleClick = async () => {
     const user = supabase.auth.user();
