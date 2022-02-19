@@ -3,6 +3,8 @@
 Hack Days is a platform for finding/matching open-source projects, that helps connect good projects with good people.
 Currently in development.
 
+[ English | [日本語](./README.ja.md) ]
+
 ## Website
 
 Still in development. Coming soon!
