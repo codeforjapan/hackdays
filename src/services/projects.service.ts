@@ -1,5 +1,5 @@
 import { PostgrestResponse } from '@supabase/supabase-js';
-import { definitions } from '../../types/supabase';
+import { definitions } from '../types/supabase';
 import { supabase } from '../utils/supabaseClient';
 
 export const ProjectService = {
