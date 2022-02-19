@@ -1,6 +1,6 @@
 # Open source project matching platform
 
-Hack Days is an open-source platform for finding/matching projects, that helps connect good projects with good people.
+Hack Days is a platform for finding/matching open-source projects, that helps connect good projects with good people.
 Currently in development.
 
 ## Website
