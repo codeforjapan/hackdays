@@ -6,7 +6,7 @@ export default function Projects() {
   const [projects, setProjects] = useState<definitions['projects'][] | null>();
   useEffect(() => {
     getData();
-  });
+  }, []);
   async function getData() {
     try {
       const data: definitions['projects'][] = await ProjectService.getProjects();

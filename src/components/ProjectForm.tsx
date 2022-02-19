@@ -3,8 +3,6 @@ import { supabase } from '../utils/supabaseClient';
 import { Box, FormControl, FormLabel, Input, Stack } from '@chakra-ui/react';
 import { PrimaryButton } from './atoms/button/PrimaryButton';
 import { useRouter } from 'next/router';
-import { definitions } from '../../types/supabase';
-import { PostgrestResponse } from '@supabase/supabase-js';
 import { ProjectService } from '../services/projects.service';
 
 export default function ProjectForm() {
