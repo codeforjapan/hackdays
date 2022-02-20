@@ -63,7 +63,7 @@
   },
   "lint-staged": {
     "linters": {
-      "src/**/*.ts(x)": [
+      "*.{ts,tsx}": [
         "eslint --fix",
         "git add"
       ]
