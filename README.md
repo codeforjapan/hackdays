@@ -1,13 +1,15 @@
 # Open source project matching platform
 
-Hack Days is an open-source project finding/matching platform for connecting good projects and good people.
+Hack Days is a platform for finding/matching open-source projects, that helps connect good projects with good people.
 Currently in development.
+
+[ English | [日本語](./README.ja.md) ]
 
 ## Website
 
 Still in development. Coming soon!
 
-## Requirement
+## Requirements
 
 - Git
 - Docker (make sure the daemon is up and running)
@@ -15,21 +17,19 @@ Still in development. Coming soon!
 
 ## Getting Started
 
-### launch supabase
-
-Clone
+### Setup the repository
 
 ```bash
-clone https://github.com/codeforjapan/hackdays.git
+git clone https://github.com/codeforjapan/hackdays.git
 ```
 
-Launch supabase
+### Launch Supabase local instance
 
 ```bash
 supabase start
 ```
 
-You will see following outputs. please copy `anon key`.
+You will see the output like the following. Copy `anon key`.
 
 ```text
          API URL: http://localhost:54321
@@ -39,28 +39,28 @@ You will see following outputs. please copy `anon key`.
 service_role key: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoic2VydmljZV9yb2xlIn0.M2d2z4SFn5C7HlJlaSLfrzuYim9nbY_XI40uWFN3hEE
 ```
 
-### Create .env.development.local
+### Create `.env.development.local`
 
-Copy sample env file
+Copy sample .env file
 
 ```bash
 cp .env.development.local.sample .env.development.local
 vi .env.development.local
 ```
 
-Replace the YOUR_ANON_KEY_HERE to the `anon key` copied at previous step.
+Replace the `YOUR_ANON_KEY_HERE` with the `anon key` copied at the previous step.
 
 ```text
 NEXT_PUBLIC_SUPABASE_URL=http://localhost:54321
 NEXT_PUBLIC_SUPABASE_ANON_KEY=YOUR_ANON_KEY_HERE <- replace this
 ```
 
-note: If you want to use supabase server instance, please use server's `API URL` and `anon key`. (see [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) for details)
+Note: if you want to connect the app to the hosted instance e.g. [app.supabase.io](https://app.supabase.io/), please retrieve `API URL` and `anon key` from the dashboard. (see [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) for details)
 
-### launch site
+### Start development server
 
 ```bash
-# instlal dependencies
+# install dependencies
 yarn install
 # launch website
 yarn dev
@@ -68,18 +68,18 @@ yarn dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can access a supabase studio with [http://localhost:54323/](http://localhost:54323/).
+You can access [Supabase Studio](https://github.com/supabase/supabase/tree/master/studio) via [http://localhost:54323/](http://localhost:54323/), that provides the dashboard where you can check various type of information such as database and Supabase Auth.
 
-Also, you can access email logs with [http://localhost:54324/](http://localhost:54324/).
+Also, you can access email logs ([inbucket](https://github.com/inbucket/inbucket)) via [http://localhost:54324/](http://localhost:54324/).
 
 ## CAUTION
 
-Currently, Strage function is not supported for the local supabase environment.
-You have to use a server instance for checking the features using Storage, ex. Profile photos.
+Currently, Supabase [Storage](https://supabase.com/docs/guides/storage) is not supported in the local supabase environment.
+You have to use a hosted instance for checking the features that use Storage, e.g. profile photos.
 
 ## Deployment
 
-see [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md)
+See [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md)
 
 ## Run tests
 
@@ -114,4 +114,4 @@ MIT License
 
 ## Learn More
 
-To learn more about this project, please visit [Our document site](https://hackmd.io/@codeforjapan/Hkc4eIKht/)
+To learn more about this project, please visit [our document pages](https://hackmd.io/@codeforjapan/Hkc4eIKht/)

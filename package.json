@@ -12,7 +12,8 @@
     "cypress:headless": "cypress run",
     "test": "jest --watch",
     "test:ci": "jest --ci",
-    "generate-ts": "source .env.development.local; node_modules/.bin/openapi-typescript ${NEXT_PUBLIC_SUPABASE_URL}/rest/v1/?apikey=${NEXT_PUBLIC_SUPABASE_ANON_KEY} --output src/types/supabase.ts"
+    "generate-ts": "source .env.development.local; node_modules/.bin/openapi-typescript ${NEXT_PUBLIC_SUPABASE_URL}/rest/v1/?apikey=${NEXT_PUBLIC_SUPABASE_ANON_KEY} --output src/types/supabase.ts",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@chakra-ui/icons": "^1.1.5",
@@ -54,7 +55,8 @@
     "openapi-typescript": "^5.2.0",
     "prettier": "^2.5.1",
     "react-addons-test-utils": "^15.6.2",
-    "typescript": "4.5.5"
+    "typescript": "4.5.5",
+    "husky": "^7.0.0"
   },
   "husky": {
     "hooks": {
@@ -62,11 +64,9 @@
     }
   },
   "lint-staged": {
-    "linters": {
-      "*.{ts,tsx}": [
-        "eslint --fix",
-        "git add"
-      ]
-    }
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ]
   }
 }
