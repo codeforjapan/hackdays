@@ -2,7 +2,7 @@ import { Button } from '@chakra-ui/react';
 import { VFC, memo, ReactNode } from 'react';
 
 type Props = {
-  children: ReactNodeb;
+  children: ReactNodea;
   onClick: () => void;
   disabled?: boolean;
   loading?: boolean;
