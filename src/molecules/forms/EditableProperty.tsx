@@ -94,7 +94,9 @@ export const EditableProperty: VFC<Props> = function foo(props: Props) {
           <EditableControls ariaLabel={label} />
         </Editable>
       ) : (
-        <Text fontSize='md'>{value}</Text>
+        <Text className='value' fontSize='md'>
+          {defaultValue}
+        </Text>
       )}
     </Box>
   );
