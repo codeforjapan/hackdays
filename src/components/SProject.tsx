@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { definitions } from '../../types/supabase';
 import { supabase } from '../utils/supabaseClient';
 import { ProjectService } from '../services/projects.service';
 import { Heading, Stack } from '@chakra-ui/react';
@@ -7,6 +6,7 @@ import { EditableProperty, onUpdatePropFunction } from './atoms/EditableProperty
 import { useT } from '@transifex/react';
 import MMembers from './molecules/projects/Members';
 import MJoinProject from './molecules/projects/JoinProject';
+import { definitions } from '../types/supabase';
 
 export default function SProject({ projectid }: { projectid: string }) {
   const [project, setSProject] = useState<definitions['projects'] | null>();

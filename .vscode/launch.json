@@ -2,7 +2,6 @@
   "version": "0.2.0",
   "configurations": [
     {
-      // For server side rendering debug
       "type": "node",
       "request": "launch",
       "name": "Next: Node",
@@ -13,7 +12,6 @@
       "console": "integratedTerminal"
     },
     {
-      // For client side rendering debug
       "type": "chrome",
       "request": "launch",
       "name": "Next: Chrome",
@@ -22,6 +20,17 @@
       "sourceMapPathOverrides": {
         "webpack:///./*": "${webRoot}/src/*"
       }
+    },
+    {
+      "type": "node",
+      "name": "vscode-jest-tests",
+      "request": "launch",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "disableOptimisticBPs": true,
+      "cwd": "${workspaceFolder}",
+      "runtimeExecutable": "yarn",
+      "args": ["test", "--runInBand", "--watchAll=false"]
     }
   ]
 }
