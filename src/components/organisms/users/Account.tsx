@@ -17,7 +17,6 @@ export default function Account({ session }: { session: Session }) {
   }, [session]);
   useEffect(() => {
     if (user) {
-      console.log('set username');
       setUsername(user.username);
       setWebsite(user.website);
       setAvatarUrl(user.avatar_url);

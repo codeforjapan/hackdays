@@ -1,5 +1,6 @@
 import { Session } from '@supabase/supabase-js';
 import { useEffect, useState } from 'react';
+import { debug } from '../utils/commonTools';
 import { supabase } from '../utils/supabaseClient';
 
 export type UserData = {
@@ -52,7 +53,6 @@ export default function useUser() {
 
   async function getMyProfile() {
     const user = supabase.auth.user();
-    console.log('user is ', user);
     if (user) {
       return getProfile(user?.id);
     } else {
@@ -72,7 +72,7 @@ export default function useUser() {
       if (error && status !== 406) {
         throw error;
       }
-      console.log('got user data: ', data);
+      debug('got user data: ', data);
       setUser(data);
     } catch (error: unknown) {
       if (error instanceof Error) alert(error.message);
@@ -82,7 +82,6 @@ export default function useUser() {
   }
 
   async function updateProfile({ username, website, avatar_url }: UpdateUserParam) {
-    console.log('start!');
     try {
       setLoading(true);
       const user = supabase.auth.user();
@@ -100,12 +99,10 @@ export default function useUser() {
         avatar_url,
         updated_at: new Date(),
       };
-      console.log(updates);
 
       const { error } = await supabase.from('profiles').upsert(updates, {
         returning: 'minimal', // Don't return the value after inserting
       });
-      console.log(error);
 
       if (error) {
         throw error;

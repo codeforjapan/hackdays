@@ -3,6 +3,7 @@ import { ProjectService } from '../../../services/projects.service';
 import { supabase } from '../../../utils/supabaseClient';
 import { PrimaryButton } from '../../atoms/button/PrimaryButton';
 import { useT } from '@transifex/react';
+import { debug } from '../../../utils/commonTools';
 
 type Props = {
   joined?: boolean;
@@ -35,7 +36,7 @@ const MJoinProject: FC<Props> = ({ joined = false, project_id }) => {
       }
       requesting.current = false;
     } catch (error) {
-      console.log(error);
+      debug(error);
       requesting.current = false;
     }
   };

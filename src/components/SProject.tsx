@@ -7,7 +7,7 @@ import { useT } from '@transifex/react';
 import MMembers from './organisms/projects/Members';
 import MJoinProject from './organisms/projects/JoinProject';
 import { definitions } from '../types/supabase';
-
+import { debug } from '../utils/commonTools';
 export default function SProject({ projectid }: { projectid: string }) {
   const [project, setSProject] = useState<definitions['projects'] | null>();
   const [members, setProjectMembers] = useState<definitions['profiles'][]>([]);
@@ -33,7 +33,7 @@ export default function SProject({ projectid }: { projectid: string }) {
       project[k] = nextValue;
       await ProjectService.updateProject(project)
         .then((data) => {
-          console.log(data);
+          debug(data);
           if (!data) {
             throw new Error("can't get data");
           }

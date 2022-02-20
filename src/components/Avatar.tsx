@@ -35,7 +35,6 @@ export default function Avatar({
   }
 
   async function uploadAvatar(event: React.ChangeEvent<HTMLInputElement>) {
-    console.log('upload avatar');
     try {
       setUploading(true);
 
