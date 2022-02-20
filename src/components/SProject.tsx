@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { supabase } from '../utils/supabaseClient';
 import { ProjectService } from '../services/projects.service';
 import { Heading, Stack } from '@chakra-ui/react';
-import { EditableProperty, onUpdatePropFunction } from '../molecules/forms/EditableProperty';
+import { EditableProperty, onUpdatePropFunction } from './molecules/forms/EditableProperty';
 import { useT } from '@transifex/react';
 import MMembers from './organisms/projects/Members';
 import MJoinProject from './organisms/projects/JoinProject';
