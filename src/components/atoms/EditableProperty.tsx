@@ -1,6 +1,6 @@
 import { CheckIcon, CloseIcon, EditIcon } from '@chakra-ui/icons';
 import {
-  Boxab,
+  Boxa,
   ButtonGroup,
   Editable,
   EditableInput,
