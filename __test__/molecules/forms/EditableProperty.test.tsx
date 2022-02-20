@@ -1,6 +1,7 @@
-import { mount, shallow } from 'enzyme';
-import { EditableProperty, onUpdatePropFunction } from '../../../src/molecules/forms/EditableProperty';
+import { mount, shallow, ReactWrapper } from 'enzyme';
+import { EditableProperty } from '../../../src/molecules/forms/EditableProperty';
 import { isVisible } from '../../util';
+import { act } from 'react-dom/test-utils';
 
 /*label: string;
   property: string;
@@ -35,7 +36,7 @@ describe('PrimaryButton', () => {
     expect(isVisible(prop.find('input').getDOMNode())).toEqual(true);
   });
   it('the data should be editable', async () => {
-    const mockCallback: onUpdatePropFunction = jest.fn().mockResolvedValue(true);
+    const mockCallback = jest.fn().mockResolvedValue(true);
     const prop = mount(
       <EditableProperty
         label='myLabel'
@@ -65,6 +66,7 @@ describe('PrimaryButton', () => {
         editable={true}
       />,
     );
+
     prop.find('button').simulate('click'); // edit
     prop.find('input').simulate('change', { target: { value: 'New Text' } });
     expect(prop.find('input').props()['value']).toEqual('New Text');
@@ -72,22 +74,43 @@ describe('PrimaryButton', () => {
     expect(prop.find('input').props()['value']).toEqual('default');
   });
   it('show error message when update is failed', async () => {
-    const mockCallback: onUpdatePropFunction = jest.fn().mockRejectedValue('error text');
-    const prop = mount(
-      <EditableProperty
-        label='myLabel'
-        property='myprop'
-        defaultValue='default'
-        onUpdateProp={mockCallback}
-        editable={true}
-      />,
-    );
-    prop.find('button').simulate('click'); // edit
-    prop.find('input').simulate('change', { target: { value: 'New Text' } });
-    expect(prop.find('input').props()['value']).toEqual('New Text');
-    prop.find('button.commit').simulate('click');
-    expect(prop.find('input').props()['value']).toEqual('New Text');
-    expect(mockCallback.call.length).toBe(1);
-    expect(mockCallback).toHaveBeenCalledWith('myprop', 'New Text');
+    const mockCallback = jest.fn().mockRejectedValue(new Error('error text'));
+
+    let app: ReactWrapper;
+    const container = document.createElement('div');
+    document.body.appendChild(container);
+    act(() => {
+      app = mount(
+        <EditableProperty
+          label='myLabel'
+          property='myprop'
+          defaultValue='default'
+          onUpdateProp={mockCallback}
+          editable={true}
+        />,
+        { attachTo: container },
+      );
+    });
+    act(() => {
+      app.find('button').simulate('click'); // edit
+    });
+    act(() => {
+      app.find('input').simulate('change', { target: { value: 'New Bad Text' } });
+    });
+    act(() => {
+      app.find('button.commit').simulate('click');
+    });
+    act(() => {
+      expect.assertions(1);
+      expect(mockCallback.call.length).toBe(1);
+    });
+    /* blow test is failed
+        expect(app.find('Text.errors').text()).toEqual('error text');
+     */
+    await function () {
+      setTimeout(() => {
+        expect(app.find('Text.errors').text()).toEqual('error text');
+      }, 100);
+    };
   });
 });

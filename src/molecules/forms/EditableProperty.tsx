@@ -74,7 +74,9 @@ export const EditableProperty: VFC<Props> = function foo(props: Props) {
   return (
     <Box>
       <Heading as='h2'>{label}</Heading>
-      <Text color='red.300'>{msg}</Text>
+      <Text className='errors' color='red.300'>
+        {msg}
+      </Text>
       {editable ? (
         <Editable
           value={value}
