@@ -29,8 +29,18 @@ function EditableControls({ ariaLabel }: { ariaLabel: string }) {
   const { isEditing, getSubmitButtonProps, getCancelButtonProps, getEditButtonProps } = useEditableControls();
   return isEditing ? (
     <ButtonGroup justifyContent='right' size='sm'>
-      <IconButton icon={<CheckIcon />} {...getSubmitButtonProps()} aria-label={ariaLabel + '-commit'} />
-      <IconButton icon={<CloseIcon />} {...getCancelButtonProps()} aria-label={ariaLabel + '-cancel'} />
+      <IconButton
+        icon={<CheckIcon />}
+        {...getSubmitButtonProps()}
+        aria-label={ariaLabel + '-commit'}
+        className='commit'
+      />
+      <IconButton
+        icon={<CloseIcon />}
+        {...getCancelButtonProps()}
+        aria-label={ariaLabel + '-cancel'}
+        className='cancel'
+      />
     </ButtonGroup>
   ) : (
     <Flex justifyContent='right'>
@@ -91,7 +101,7 @@ export const EditableProperty: VFC<Props> = function foo(props: Props) {
               }
             }}
           />
-          <EditableControls ariaLabel={label} />
+          <EditableControls ariaLabel={property} />
         </Editable>
       ) : (
         <Text className='value' fontSize='md'>
