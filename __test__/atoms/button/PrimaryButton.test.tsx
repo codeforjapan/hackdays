@@ -9,8 +9,6 @@ import { PrimaryButton } from '../../../src/components/atoms/button/PrimaryButto
 
 describe('PrimaryButton', () => {
   it('renders a child', () => {
-    // For Jest+RTL demonstration purpose only
-    // This test should not be done by us, but by chakra-ui.
     const mockCallback = jest.fn();
     const button = shallow(<PrimaryButton onClick={mockCallback}>Hello</PrimaryButton>);
     button.simulate('click');
