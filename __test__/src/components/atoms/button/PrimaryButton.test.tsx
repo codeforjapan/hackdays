@@ -1,5 +1,5 @@
 import { shallow } from 'enzyme';
-import { PrimaryButton } from '../../../src/components/atoms/button/PrimaryButton';
+import { PrimaryButton } from '../../../../../src/components/atoms/button/PrimaryButton';
 
 describe('PrimaryButton', () => {
   it('renders a child', () => {

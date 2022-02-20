@@ -1,6 +1,6 @@
 import { mount, shallow, ReactWrapper } from 'enzyme';
-import { EditableProperty } from '../../../src/components/molecules/forms/EditableProperty';
-import { isVisible } from '../../util';
+import { EditableProperty } from '../../../../../src/components/molecules/forms/EditableProperty';
+import { isVisible } from '../../../../util';
 import { act } from 'react-dom/test-utils';
 
 /*label: string;
