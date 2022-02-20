@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
-import { supabase } from '../utils/supabaseClient';
+import { supabase } from '../../../utils/supabaseClient';
 import { Session } from '@supabase/supabase-js';
 import { Box, Stack, FormControl, FormLabel, Input, Button } from '@chakra-ui/react';
-import { PrimaryButton } from './atoms/button/PrimaryButton';
-import Avatar from './Avatar';
+import { PrimaryButton } from '../../atoms/button/PrimaryButton';
+import Avatar from '../../Avatar';
 
 export default function Account({ session }: { session: Session }) {
   const [loading, setLoading] = useState<boolean>(true);

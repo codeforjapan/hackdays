@@ -7,26 +7,9 @@ import { useT } from '@transifex/react';
 import useUser from '../hooks/useUser';
 
 export default function Auth() {
-  const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState('');
-  const { signInWithGithub } = useUser();
+  const { signInWithGithub, handleLogin, loading } = useUser();
 
-  const handleLogin = async (email: string) => {
-    try {
-      setLoading(true);
-      const { error } = await supabase.auth.signIn({
-        email,
-      });
-      if (error) throw error;
-      alert('Check your email for the login link!');
-    } catch (error: unknown) {
-      if (error instanceof Error) {
-        alert(error.message);
-      }
-    } finally {
-      setLoading(false);
-    }
-  };
   const onClickLogin = () => {
     handleLogin(email);
   };
