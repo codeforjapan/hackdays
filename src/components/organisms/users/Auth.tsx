@@ -1,10 +1,9 @@
 import { useState } from 'react';
-import { supabase } from '../utils/supabaseClient';
 import React from 'react';
 import { Box, Heading, Stack, Text, Input } from '@chakra-ui/react';
-import { PrimaryButton } from './atoms/button/PrimaryButton';
+import { PrimaryButton } from '../../atoms/button/PrimaryButton';
 import { useT } from '@transifex/react';
-import useUser from '../hooks/useUser';
+import useUser from '../../../hooks/useUser';
 
 export default function Auth() {
   const [email, setEmail] = useState('');

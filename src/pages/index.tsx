@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '../utils/supabaseClient';
-import Auth from '../components/Auth';
+import Auth from '../components/organisms/users/Auth';
 import Account from '../components/organisms/users/Account';
 import { Session } from '@supabase/supabase-js';
 import { Box, Flex } from '@chakra-ui/react';
