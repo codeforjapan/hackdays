@@ -1,5 +1,5 @@
 import { Session } from '@supabase/supabase-js';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { debug } from '../utils/commonTools';
 import { supabase } from '../utils/supabaseClient';
 
@@ -26,7 +26,7 @@ export default function useUser() {
       authListener?.unsubscribe();
     };
   }, []);
-  async function handleLogin(email: string) {
+  const handleLogin = useCallback(async (email: string) => {
     try {
       setLoading(true);
       const { error } = await supabase.auth.signIn({
@@ -41,25 +41,26 @@ export default function useUser() {
     } finally {
       setLoading(false);
     }
-  }
+  }, []);
 
-  function signInWithGithub() {
+  const signInWithGithub = useCallback(() => {
     supabase.auth.signIn({ provider: 'github' });
-  }
+  }, []);
 
   function signOut() {
     supabase.auth.signOut();
   }
 
-  async function getMyProfile() {
+  const getMyProfile = useCallback(async () => {
     const user = supabase.auth.user();
     if (user) {
       return getProfile(user?.id);
     } else {
       throw new Error('not logged in');
     }
-  }
-  async function getProfile(id: string) {
+  }, []);
+
+  const getProfile = useCallback(async (id: string) => {
     try {
       setLoading(true);
 
@@ -79,9 +80,9 @@ export default function useUser() {
     } finally {
       setLoading(false);
     }
-  }
+  }, []);
 
-  async function updateProfile({ username, website, avatar_url }: UpdateUserParam) {
+  const updateProfile = useCallback(async ({ username, website, avatar_url }: UpdateUserParam) => {
     try {
       setLoading(true);
       const user = supabase.auth.user();
@@ -112,7 +113,7 @@ export default function useUser() {
     } finally {
       setLoading(false);
     }
-  }
+  }, []);
 
   return {
     user,
