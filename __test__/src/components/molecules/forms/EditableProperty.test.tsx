@@ -1,7 +1,8 @@
-import { mount, shallow, ReactWrapper } from 'enzyme';
+import { mount, shallow } from 'enzyme';
 import { EditableProperty } from '../../../../../src/components/molecules/forms/EditableProperty';
 import { isVisible } from '../../../../util';
-import { act } from 'react-dom/test-utils';
+import userEvent from '@testing-library/user-event';
+import { render, screen, waitFor } from '@testing-library/react';
 
 /*label: string;
   property: string;
@@ -76,41 +77,24 @@ describe('PrimaryButton', () => {
   it('show error message when update is failed', async () => {
     const mockCallback = jest.fn().mockRejectedValue(new Error('error text'));
 
-    let app: ReactWrapper;
     const container = document.createElement('div');
     document.body.appendChild(container);
-    act(() => {
-      app = mount(
-        <EditableProperty
-          label='myLabel'
-          property='myprop'
-          defaultValue='default'
-          onUpdateProp={mockCallback}
-          editable={true}
-        />,
-        { attachTo: container },
-      );
+    //expect.assertions(1);
+    render(
+      <EditableProperty
+        label='myLabel'
+        property='myprop'
+        defaultValue='default'
+        onUpdateProp={mockCallback}
+        editable={true}
+      />,
+    );
+    userEvent.click(screen.getByRole('button'));
+    userEvent.type(screen.getByRole('textbox'), 'New Bad Text');
+    userEvent.click(screen.getByRole('button', { name: 'myprop-commit' }));
+    expect(mockCallback.call.length).toBe(1);
+    await waitFor(() => {
+      screen.getByText('error text');
     });
-    act(() => {
-      app.find('button').simulate('click'); // edit
-    });
-    act(() => {
-      app.find('input').simulate('change', { target: { value: 'New Bad Text' } });
-    });
-    act(() => {
-      app.find('button.commit').simulate('click');
-    });
-    act(() => {
-      expect.assertions(1);
-      expect(mockCallback.call.length).toBe(1);
-    });
-    /* blow test is failed
-        expect(app.find('Text.errors').text()).toEqual('error text');
-     */
-    await function () {
-      setTimeout(() => {
-        expect(app.find('Text.errors').text()).toEqual('error text');
-      }, 100);
-    };
   });
 });
