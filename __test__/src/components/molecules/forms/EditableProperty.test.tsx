@@ -1,7 +1,8 @@
-import { mount, shallow, ReactWrapper } from 'enzyme';
+import { mount, shallow } from 'enzyme';
 import { EditableProperty } from '../../../../../src/components/molecules/forms/EditableProperty';
 import { isVisible } from '../../../../util';
-import { act } from 'react-dom/test-utils';
+import { render, waitFor, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 
 /*label: string;
   property: string;
@@ -73,44 +74,66 @@ describe('PrimaryButton', () => {
     prop.find('button.cancel').simulate('click');
     expect(prop.find('input').props()['value']).toEqual('default');
   });
-  it('show error message when update is failed', async () => {
+
+  test('show error message when update is failed', async () => {
     const mockCallback = jest.fn().mockRejectedValue(new Error('error text'));
 
-    let app: ReactWrapper;
-    const container = document.createElement('div');
-    document.body.appendChild(container);
-    act(() => {
-      app = mount(
-        <EditableProperty
-          label='myLabel'
-          property='myprop'
-          defaultValue='default'
-          onUpdateProp={mockCallback}
-          editable={true}
-        />,
-        { attachTo: container },
-      );
+    render(
+      <EditableProperty
+        label='myLabel'
+        property='myprop'
+        defaultValue='default'
+        onUpdateProp={mockCallback}
+        editable={true}
+      ></EditableProperty>,
+    );
+
+    userEvent.click(screen.getByLabelText('myprop-edit'));
+    userEvent.type(screen.getByRole('textbox'), 'new bad text');
+    userEvent.click(screen.getByLabelText('myprop-commit'));
+    await waitFor(() => {
+      expect(screen.getByLabelText('error-message').textContent).toEqual('error text');
     });
-    act(() => {
-      app.find('button').simulate('click'); // edit
-    });
-    act(() => {
-      app.find('input').simulate('change', { target: { value: 'New Bad Text' } });
-    });
-    act(() => {
-      app.find('button.commit').simulate('click');
-    });
-    act(() => {
-      expect.assertions(1);
-      expect(mockCallback.call.length).toBe(1);
-    });
-    /* blow test is failed
-        expect(app.find('Text.errors').text()).toEqual('error text');
-     */
-    await function () {
-      setTimeout(() => {
-        expect(app.find('Text.errors').text()).toEqual('error text');
-      }, 100);
-    };
   });
+
+  // it('show error message when update is failed', async () => {
+  //   const mockCallback = jest.fn().mockRejectedValue(new Error('error text'));
+
+  //   let app: ReactWrapper;
+  //   const container = document.createElement('div');
+  //   document.body.appendChild(container);
+  //   act(() => {
+  //     app = mount(
+  //       <EditableProperty
+  //         label='myLabel'
+  //         property='myprop'
+  //         defaultValue='default'
+  //         onUpdateProp={mockCallback}
+  //         editable={true}
+  //       />,
+  //       { attachTo: container },
+  //     );
+  //   });
+  //   act(() => {
+  //     app.find('button').simulate('click'); // edit
+  //   });
+  //   act(() => {
+  //     app.find('input').simulate('change', { target: { value: 'New Bad Text' } });
+  //   });
+  //   act(() => {
+  //     app.find('button.commit').simulate('click');
+  //   });
+  //   act(() => {
+  //     expect.assertions(1);
+  //     expect(mockCallback.call.length).toBe(1);
+  //   });
+  //   /* blow test is failed
+  //       expect(app.find('Text.errors').text()).toEqual('error text');
+  //    */
+  //   await function () {
+  //     setTimeout(() => {
+  //       expect(app.find('Text.errors').text()).toEqual('error text');
+  //     }, 100);
+  //   };
+  // });
 });
