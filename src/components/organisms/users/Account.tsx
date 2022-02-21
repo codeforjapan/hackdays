@@ -3,7 +3,7 @@ import { supabase } from '../../../utils/supabaseClient';
 import { Session } from '@supabase/supabase-js';
 import { Box, Stack, FormControl, FormLabel, Input, Button } from '@chakra-ui/react';
 import { PrimaryButton } from '../../atoms/button/PrimaryButton';
-import Avatar from '../../Avatar';
+import Avatar from './Avatar';
 import useUser, { UpdateUserParam } from '../../../hooks/useUser';
 
 export default function Account({ session }: { session: Session }) {
@@ -19,7 +19,9 @@ export default function Account({ session }: { session: Session }) {
     if (user) {
       setUsername(user.username);
       setWebsite(user.website);
-      setAvatarUrl(user.avatar_url);
+      if (user.avatar_url) {
+        setAvatarUrl(user.avatar_url);
+      }
     }
   }, [user]);
   function clickUpdate(data: UpdateUserParam) {

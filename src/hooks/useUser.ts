@@ -115,6 +115,7 @@ export default function useUser() {
   }
 
   return {
+    user,
     loading,
     session,
     handleLogin,
@@ -122,6 +123,5 @@ export default function useUser() {
     signOut,
     getMyProfile,
     updateProfile,
-    user,
   };
 }
