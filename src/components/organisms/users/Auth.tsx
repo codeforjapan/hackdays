@@ -3,8 +3,9 @@ import React from 'react';
 import { Box, Heading, Stack, Text, Input } from '@chakra-ui/react';
 import { PrimaryButton } from '../../atoms/button/PrimaryButton';
 import useUser from '../../../hooks/useUser';
-import { t } from '../../../utils/commonTools';
+import { useT } from '@transifex/react';
 export default function Auth() {
+  const t = useT();
   const [email, setEmail] = useState('');
   const { signInWithGithub, handleLogin, loading } = useUser();
 
