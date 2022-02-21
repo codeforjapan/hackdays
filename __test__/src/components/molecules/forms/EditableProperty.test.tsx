@@ -74,12 +74,9 @@ describe('PrimaryButton', () => {
     prop.find('button.cancel').simulate('click');
     expect(prop.find('input').props()['value']).toEqual('default');
   });
-  it('show error message when update is failed', async () => {
-    const mockCallback = jest.fn().mockRejectedValue(new Error('error text'));
 
-    const container = document.createElement('div');
-    document.body.appendChild(container);
-    //expect.assertions(1);
+  test('show error message when update is failed', async () => {
+    const mockCallback = jest.fn().mockRejectedValue(new Error('error text'));
     render(
       <EditableProperty
         label='myLabel'
@@ -89,12 +86,11 @@ describe('PrimaryButton', () => {
         editable={true}
       />,
     );
-    userEvent.click(screen.getByRole('button'));
-    userEvent.type(screen.getByRole('textbox'), 'New Bad Text');
-    userEvent.click(screen.getByRole('button', { name: 'myprop-commit' }));
-    expect(mockCallback.call.length).toBe(1);
+    userEvent.click(screen.getByLabelText('myprop-edit'));
+    userEvent.type(screen.getByRole('textbox'), 'new bad text');
+    userEvent.click(screen.getByLabelText('myprop-commit'));
     await waitFor(() => {
-      screen.getByText('error text');
+      expect(screen.getByLabelText('error-message').textContent).toEqual('error text');
     });
   });
 });
