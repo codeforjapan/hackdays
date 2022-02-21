@@ -2,7 +2,7 @@ import { FC, useEffect, useRef, useState } from 'react';
 import { ProjectService } from '../../../services/projects.service';
 import { supabase } from '../../../utils/supabaseClient';
 import { PrimaryButton } from '../../atoms/button/PrimaryButton';
-import { useT } from '@transifex/react';
+import { t } from '../../../utils/commonTools';
 import { debug } from '../../../utils/commonTools';
 
 type Props = {
@@ -13,7 +13,6 @@ type Props = {
 const MJoinProject: FC<Props> = ({ joined = false, project_id }) => {
   const [isJoined, setIsJoined] = useState(joined);
   const requesting = useRef(false);
-  const t = useT();
   useEffect(() => {
     setIsJoined(joined);
   }, [joined]);

@@ -2,9 +2,8 @@ import { useState } from 'react';
 import React from 'react';
 import { Box, Heading, Stack, Text, Input } from '@chakra-ui/react';
 import { PrimaryButton } from '../../atoms/button/PrimaryButton';
-import { useT } from '@transifex/react';
 import useUser from '../../../hooks/useUser';
-
+import { t } from '../../../utils/commonTools';
 export default function Auth() {
   const [email, setEmail] = useState('');
   const { signInWithGithub, handleLogin, loading } = useUser();
@@ -12,7 +11,6 @@ export default function Auth() {
   const onClickLogin = () => {
     handleLogin(email);
   };
-  const t = useT();
   return (
     <Box shadow='md' w='sm'>
       <Heading as='h1' size='lg' textAlign='center'>

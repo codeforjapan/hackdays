@@ -3,7 +3,7 @@ import { supabase } from '../utils/supabaseClient';
 import { ProjectService } from '../services/projects.service';
 import { Heading, Stack } from '@chakra-ui/react';
 import { EditableProperty, onUpdatePropFunction } from './molecules/forms/EditableProperty';
-import { useT } from '@transifex/react';
+import { t } from '../utils/commonTools';
 import MMembers from './organisms/projects/Members';
 import MJoinProject from './organisms/projects/JoinProject';
 import { definitions } from '../types/supabase';
@@ -71,7 +71,6 @@ export default function SProject({ projectid }: { projectid: string }) {
     };
     return labels[String(key)];
   };
-  const t = useT();
 
   const isJoined = () => {
     let joined = false;
