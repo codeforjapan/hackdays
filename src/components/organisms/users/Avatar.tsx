@@ -15,7 +15,13 @@ export default function Avatar({
   useEffect(() => {
     if (url) downloadAvatar(url);
   }, [url]);
+  function fileUpload(event: React.ChangeEvent<HTMLInputElement>) {
+    if (!event.target.files || event.target.files.length === 0) {
+      throw new Error('You must select an image to upload.');
+    }
 
+    uploadAvatar(event.target.files[0]);
+  }
   return (
     <div>
       {avatarUrl ? (
@@ -35,7 +41,7 @@ export default function Avatar({
           type='file'
           id='single'
           accept='image/*'
-          onChange={uploadAvatar}
+          onChange={fileUpload}
           disabled={avatarUploading}
         />
       </div>

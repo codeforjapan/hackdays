@@ -20,15 +20,10 @@ export default function useAvatar({ onUpload }: { onUpload: (url: string) => voi
     }
   }, []);
 
-  const uploadAvatar = useCallback(async (event: React.ChangeEvent<HTMLInputElement>) => {
+  const uploadAvatar = useCallback(async (file: File) => {
     try {
       setUploading(true);
 
-      if (!event.target.files || event.target.files.length === 0) {
-        throw new Error('You must select an image to upload.');
-      }
-
-      const file = event.target.files[0];
       const fileExt = file.name.split('.').pop();
       const fileName = `${Math.random()}.${fileExt}`;
       const filePath = `${fileName}`;
