@@ -1,5 +1,6 @@
 import { Session } from '@supabase/supabase-js';
 import { useCallback, useEffect, useState } from 'react';
+import { UpdateUserServiceParam, UserService } from '../services/users.service';
 import { debug } from '../utils/commonTools';
 import { supabase } from '../utils/supabaseClient';
 
@@ -64,11 +65,7 @@ export default function useUser() {
     try {
       setLoading(true);
 
-      const { data, error, status } = await supabase
-        .from('profiles')
-        .select(`username, website, avatar_url`)
-        .eq('id', id)
-        .single();
+      const { data, error, status } = await UserService.getUser(id);
 
       if (error && status !== 406) {
         throw error;
@@ -87,13 +84,7 @@ export default function useUser() {
       setLoading(true);
       const user = supabase.auth.user();
 
-      const updates: {
-        id: string | undefined;
-        username: string | null;
-        website: string | null;
-        avatar_url: string | null;
-        updated_at: Date;
-      } = {
+      const updates: UpdateUserServiceParam = {
         id: user?.id,
         username,
         website,
@@ -101,15 +92,11 @@ export default function useUser() {
         updated_at: new Date(),
       };
 
-      const { error } = await supabase.from('profiles').upsert(updates, {
-        returning: 'minimal', // Don't return the value after inserting
-      });
+      const { error } = await UserService.updateUser(updates);
 
       if (error) {
         throw error;
       }
-    } catch (error: unknown) {
-      alert((error as Error).message);
     } finally {
       setLoading(false);
     }
