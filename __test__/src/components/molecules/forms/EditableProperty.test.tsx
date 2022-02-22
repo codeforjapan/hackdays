@@ -1,6 +1,4 @@
-import { mount, shallow } from 'enzyme';
 import { EditableProperty } from '../../../../../src/components/molecules/forms/EditableProperty';
-import { isVisible } from '../../../../util';
 import userEvent from '@testing-library/user-event';
 import { render, screen, waitFor } from '@testing-library/react';
 
@@ -12,18 +10,16 @@ import { render, screen, waitFor } from '@testing-library/react';
   disabled?: boolean;
   loading?: boolean;
 */
-describe('PrimaryButton', () => {
-  it('render non-editable value', () => {
+describe('EditableProperty', () => {
+  it('renders non-editable value', () => {
     const mockCallback = jest.fn();
-    const prop = shallow(
-      <EditableProperty label='myLabel' property='myprop' defaultValue='default' onUpdateProp={mockCallback} />,
-    );
-    expect(prop.find('Heading').text()).toEqual('myLabel');
-    expect(prop.find('Text.value').text()).toEqual('default');
+    render(<EditableProperty label='myLabel' property='myprop' defaultValue='default' onUpdateProp={mockCallback} />);
+    expect(screen.getByRole('heading')).toHaveTextContent('myLabel');
+    expect(screen.getByText('default', { selector: '.value' })).toBeInTheDocument();
   });
-  it('click to edit for editable value', () => {
+  it('shows a textbox to edit, after an edit button is clicked', async () => {
     const mockCallback = jest.fn();
-    const prop = mount(
+    render(
       <EditableProperty
         label='myLabel'
         property='myprop'
@@ -32,13 +28,17 @@ describe('PrimaryButton', () => {
         editable={true}
       />,
     );
-    expect(isVisible(prop.find('input').getDOMNode())).toEqual(false);
-    prop.find('button').simulate('click');
-    expect(isVisible(prop.find('input').getDOMNode())).toEqual(true);
+    // A textbox should not be in DOM before staring edit
+    expect(screen.queryByRole('textbox')).not.toBeInTheDocument();
+
+    // The aria-label of an edit button should be `${property}-edit`
+    await userEvent.click(screen.getByLabelText('myprop-edit'));
+    expect(screen.getByRole('textbox')).toBeVisible();
   });
-  it('the data should be editable', async () => {
+  it('changes the value, after an user edits and saves it', async () => {
+    const user = userEvent.setup();
     const mockCallback = jest.fn().mockResolvedValue(true);
-    const prop = mount(
+    render(
       <EditableProperty
         label='myLabel'
         property='myprop'
@@ -47,18 +47,35 @@ describe('PrimaryButton', () => {
         editable={true}
       />,
     );
-    prop.find('button').simulate('click'); // edit
-    expect(prop.find('EditablePreview').text()).toEqual('default');
-    prop.find('input').simulate('change', { target: { value: 'New Text' } }); // enter text
-    expect(prop.find('input').props()['value']).toEqual('New Text'); // text should be changed
-    prop.find('button.commit').simulate('click'); // click commit
-    expect(mockCallback.call.length).toBe(1); // the mock function should be called
-    expect(mockCallback).toHaveBeenCalledWith('myprop', 'New Text'); // with correct parameters
-    expect(prop.find('EditablePreview').text()).toEqual('New Text'); // the displaying text should be chaned
+    // 'default' should be shown as preview text
+    expect(screen.getByText('default')).toBeInTheDocument();
+
+    // User begins to edit
+    await user.click(screen.getByLabelText('myprop-edit'));
+
+    // User deletes existing text and enters new one
+    const input = screen.getByRole('textbox');
+    await user.click(input);
+    await user.clear(input);
+    await user.keyboard('New Text');
+    expect(input).toHaveValue('New Text');
+
+    // User saves the change
+    // The aria-label of a save button should be `${property}-commit`
+    await userEvent.click(screen.getByLabelText('myprop-commit'));
+
+    // The onUpdateProp handler should be called once
+    // with the changed prop name and its new vaue.
+    expect(mockCallback).toHaveBeenCalledTimes(1);
+    expect(mockCallback).toHaveBeenCalledWith('myprop', 'New Text');
+
+    // 'New Text' should be shown as new preview text
+    expect(screen.getByText('New Text')).toBeInTheDocument();
   });
-  it('the data should be cancellable', () => {
+  it('restores the value, after the change is discarded', async () => {
+    const user = userEvent.setup();
     const mockCallback = jest.fn();
-    const prop = mount(
+    render(
       <EditableProperty
         label='myLabel'
         property='myprop'
@@ -68,14 +85,28 @@ describe('PrimaryButton', () => {
       />,
     );
 
-    prop.find('button').simulate('click'); // edit
-    prop.find('input').simulate('change', { target: { value: 'New Text' } });
-    expect(prop.find('input').props()['value']).toEqual('New Text');
-    prop.find('button.cancel').simulate('click');
-    expect(prop.find('input').props()['value']).toEqual('default');
+    // User begins to edit
+    await user.click(screen.getByLabelText('myprop-edit'));
+
+    // User deletes existing text and enters new one
+    const input = screen.getByRole('textbox');
+    await user.click(input);
+    await user.clear(input);
+    await user.keyboard('New Text');
+    expect(input).toHaveValue('New Text');
+
+    // User discards the change
+    // The aria-label of a discard button should be `${property}-cancel`
+    await userEvent.click(screen.getByLabelText('myprop-cancel'));
+
+    // 'default' should be left as preview text
+    expect(screen.getByText('default')).toBeInTheDocument();
+    // 'New text' should not be shown because it was discarded
+    expect(screen.queryByText('New Text')).not.toBeInTheDocument();
   });
 
-  test('show error message when update is failed', async () => {
+  it('shows error message when fails to update the value', async () => {
+    const user = userEvent.setup();
     const mockCallback = jest.fn().mockRejectedValue(new Error('error text'));
     render(
       <EditableProperty
@@ -86,11 +117,11 @@ describe('PrimaryButton', () => {
         editable={true}
       />,
     );
-    userEvent.click(screen.getByLabelText('myprop-edit'));
-    userEvent.type(screen.getByRole('textbox'), 'new bad text');
-    userEvent.click(screen.getByLabelText('myprop-commit'));
+    await user.click(screen.getByLabelText('myprop-edit'));
+    await user.type(screen.getByRole('textbox'), 'new bad text');
+    await user.click(screen.getByLabelText('myprop-commit'));
     await waitFor(() => {
-      expect(screen.getByLabelText('error-message').textContent).toEqual('error text');
+      expect(screen.getByLabelText('error-message')).toHaveTextContent('error text');
     });
   });
 });
