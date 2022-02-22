@@ -55,8 +55,8 @@ describe('EditableProperty', () => {
 
     // User deletes existing text and enters new one
     const input = screen.getByRole('textbox');
-    await user.clear(input);
     await user.click(input);
+    await user.clear(input);
     await user.keyboard('New Text');
     expect(input).toHaveValue('New Text');
 
@@ -90,8 +90,8 @@ describe('EditableProperty', () => {
 
     // User deletes existing text and enters new one
     const input = screen.getByRole('textbox');
-    await user.clear(input);
     await user.click(input);
+    await user.clear(input);
     await user.keyboard('New Text');
     expect(input).toHaveValue('New Text');
 
