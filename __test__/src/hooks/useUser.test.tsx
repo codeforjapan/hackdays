@@ -30,7 +30,7 @@ describe('useUser', () => {
       result.current.getMyProfile();
     });
     await waitFor(() => {
-      expect(result.current.user.username).toEqual('myusername');
+      expect(result.current.userState.user.username).toEqual('myusername');
     });
   });
   /**

@@ -14,10 +14,16 @@ export type UpdateUserParam = {
   website: string | null;
   avatar_url: string | null;
 };
+export type UserState = {
+  user: UserData;
+  loading: boolean;
+  session: Session;
+};
 export default function useUser() {
   const [session, setSession] = useState<Session>();
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState<UserData>(null);
+  const userState = { session, loading, user };
   useEffect(() => {
     const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
       if (session != null) setSession(session);
@@ -103,9 +109,7 @@ export default function useUser() {
   }, []);
 
   return {
-    user,
-    loading,
-    session,
+    userState,
     handleLogin,
     signInWithGithub,
     signOut,
