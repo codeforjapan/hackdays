@@ -1,5 +1,5 @@
 import { renderHook, act } from '@testing-library/react-hooks';
-import useProject from '../../../src/hooks/useProject';
+import useProject, { ProjectType } from '../../../src/hooks/useProject';
 import { v4 as uuidv4 } from 'uuid';
 import { ProjectService } from '../../../src/services/projects.service';
 import { waitFor } from '@testing-library/react';
@@ -78,6 +78,24 @@ describe('useProject', () => {
     });
     await waitFor(() => {
       expect(result.current.projectState.project.id).toEqual(projectid);
+    });
+  });
+  it('should update project', async () => {
+    const { result } = renderHook(() => useProject());
+    const projectid = uuidv4();
+    const myid = uuidv4();
+    const newdata: ProjectType = {
+      id: projectid,
+      owner_user_id: myid,
+      name: 'new project id',
+      purpose: 'purpose',
+    };
+    ProjectService.updateProject = jest.fn().mockResolvedValue(newdata);
+    await act(async () => {
+      result.current.updateProject(newdata);
+    });
+    await waitFor(() => {
+      expect(result.current.projectState.project).toEqual(newdata);
     });
   });
 });

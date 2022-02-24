@@ -72,7 +72,7 @@ export default function useProject() {
       setLoading(false);
     }
   }
-  const editProject = async (newproject: ProjectType) => {
+  const updateProject = async (newproject: ProjectType) => {
     const data = await ProjectService.updateProject(newproject).catch((e: unknown) => {
       throw e;
     });
@@ -83,7 +83,7 @@ export default function useProject() {
   return {
     projectState,
     getProject,
-    editProject,
+    updateProject,
     createProject,
     getLabel,
   };

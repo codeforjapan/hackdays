@@ -8,7 +8,7 @@ import { supabase } from '../../../utils/supabaseClient';
 
 export default function SProject({ projectid }: { projectid: string }) {
   const [editable, setEditable] = useState(false);
-  const { projectState, getProject, editProject, getLabel } = useProject();
+  const { projectState, getProject, updateProject, getLabel } = useProject();
   useEffect(() => {
     getProject(projectid);
   }, []);
@@ -19,12 +19,12 @@ export default function SProject({ projectid }: { projectid: string }) {
     }
   }, [projectState.project]);
 
-  const updateProject: onUpdatePropFunction = async (property: string, nextValue: string) => {
+  const onUpdateProject: onUpdatePropFunction = async (property: string, nextValue: string) => {
     if (projectState.project) {
       const k: EditableProp = property as EditableProp;
       const newproject = { ...projectState.project };
       newproject[k] = nextValue;
-      editProject(newproject);
+      updateProject(newproject);
     }
   };
   const isJoined = () => {
@@ -50,7 +50,7 @@ export default function SProject({ projectid }: { projectid: string }) {
             label={getLabel(val)}
             defaultValue={defaultval}
             property={val}
-            onUpdateProp={updateProject}
+            onUpdateProp={onUpdateProject}
             editable={editable}
             key={index}
           />
