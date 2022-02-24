@@ -24,7 +24,9 @@ describe('useUser', () => {
   it('should return my profile', async () => {
     supabase.auth.user = jest.fn().mockReturnValue({ id: uuidv4() });
     UserService.getUser = jest.fn().mockResolvedValue({
-      data: { username: 'myusername', website: 'https://test.com', avatar_url: 'https://avatar.com/' },
+      username: 'myusername',
+      website: 'https://test.com',
+      avatar_url: 'https://avatar.com/',
     });
     const { result } = renderHook(() => useUser());
     await act(async () => {
@@ -36,7 +38,9 @@ describe('useUser', () => {
     const uuid = uuidv4();
     const { result } = renderHook(() => useUser());
     UserService.getUser = jest.fn().mockResolvedValue({
-      data: { username: 'myusername', website: 'https://test.com', avatar_url: 'https://avatar.com/' },
+      username: 'myusername',
+      website: 'https://test.com',
+      avatar_url: 'https://avatar.com/',
     });
     await act(async () => {
       await result.current.getProfile(uuid);

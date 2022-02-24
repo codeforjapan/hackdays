@@ -19,23 +19,14 @@ export type UserState = {
   session: Session | null;
 };
 export default function useUser() {
-  const [userState, setState] = useState<UserState>({
-    loading: false,
-    user: { username: '', website: '', avatar_url: '' },
-    session: null,
-  });
-  function setSession(session: Session) {
-    userState.session = session;
-    setState(userState);
-  }
-  function setLoading(loading: boolean) {
-    userState.loading = loading;
-    setState(userState);
-  }
-  function setUser(user: UserData) {
-    userState.user = user;
-    setState(userState);
-  }
+  const [user, setUser] = useState<UserData>();
+  const [loading, setLoading] = useState<boolean>(false);
+  const [session, setSession] = useState<Session>();
+  const userState = {
+    loading,
+    user,
+    session,
+  };
 
   useEffect(() => {
     const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
@@ -73,7 +64,9 @@ export default function useUser() {
 
   const getMyProfile = useCallback(async () => {
     const user = supabase.auth.user();
+    console.log('hoge');
     if (user) {
+      console.log('get my profile');
       return getProfile(user?.id);
     } else {
       throw new Error('not logged in');
@@ -83,10 +76,13 @@ export default function useUser() {
   const getProfile = useCallback(async (id: string) => {
     try {
       setLoading(true);
+      console.log(id);
       const result = await UserService.getUser(id).catch((error: unknown) => {
+        console.log(error);
         throw error;
       });
-      setUser(result.data);
+      console.log(result);
+      setUser(result);
     } catch (error: unknown) {
       if (error instanceof Error) alert(error.message);
     } finally {

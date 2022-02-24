@@ -23,15 +23,9 @@ export type ProjectState = {
 };
 export default function useProject() {
   const t = useT();
-  const [projectState, setProjectState] = useState<ProjectState>({ project: null, loading: false });
-  function setProject(project: ProjectType) {
-    projectState.project = project;
-    setProjectState(projectState);
-  }
-  function setLoading(loading: boolean) {
-    projectState.loading = loading;
-    setProjectState(projectState);
-  }
+  const [project, setProject] = useState<ProjectType>();
+  const [loading, setLoading] = useState<boolean>(false);
+  const projectState = { project, loading };
 
   const getLabel = (key: EditableProp) => {
     const labels: { [name: string]: string } = {

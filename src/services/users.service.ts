@@ -16,13 +16,14 @@ async function getUser(id: string) {
     .select(`username, website, avatar_url`)
     .eq('id', id)
     .single();
+  console.log(data);
   if (error && status !== 406) {
     throw error;
   }
-  if (!data.data) {
+  if (!data) {
     throw new Error("can't retlieve data");
   }
-  return data.data;
+  return data;
 }
 async function updateUser(updates: UpdateUserServiceParam) {
   return supabase.from('profiles').upsert(updates, {
