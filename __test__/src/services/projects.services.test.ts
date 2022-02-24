@@ -3,6 +3,7 @@ import { supabase } from '../../../src/utils/supabaseClient';
 
 describe('ProjectService', () => {
   it('should get first 30 projects', async () => {
+    expect.assertions(1);
     supabase.from = jest.fn().mockImplementation(() => {
       return {
         select: jest.fn().mockImplementation(() => {
