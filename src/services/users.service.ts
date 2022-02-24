@@ -16,7 +16,6 @@ async function getUser(id: string) {
     .select(`username, website, avatar_url`)
     .eq('id', id)
     .single();
-  console.log(data);
   if (error && status !== 406) {
     throw error;
   }

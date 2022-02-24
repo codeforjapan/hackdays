@@ -64,9 +64,7 @@ export default function useUser() {
 
   const getMyProfile = useCallback(async () => {
     const user = supabase.auth.user();
-    console.log('hoge');
     if (user) {
-      console.log('get my profile');
       return getProfile(user?.id);
     } else {
       throw new Error('not logged in');
@@ -76,12 +74,9 @@ export default function useUser() {
   const getProfile = useCallback(async (id: string) => {
     try {
       setLoading(true);
-      console.log(id);
       const result = await UserService.getUser(id).catch((error: unknown) => {
-        console.log(error);
         throw error;
       });
-      console.log(result);
       setUser(result);
     } catch (error: unknown) {
       if (error instanceof Error) alert(error.message);
