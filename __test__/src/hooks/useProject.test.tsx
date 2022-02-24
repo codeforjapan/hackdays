@@ -3,7 +3,6 @@ import useProject, { ProjectType } from '../../../src/hooks/useProject';
 import { v4 as uuidv4 } from 'uuid';
 import { ProjectService } from '../../../src/services/projects.service';
 import { waitFor } from '@testing-library/react';
-import { execPath } from 'process';
 import { supabase } from '../../../src/utils/supabaseClient';
 
 describe('useProject', () => {
