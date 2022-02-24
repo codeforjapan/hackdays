@@ -37,12 +37,12 @@ async function getProject(projectid: string) {
     throw error;
   }
   if (!data) {
-    throw new Error("can't create data");
+    throw new Error("can't get data");
   }
   return data[0];
 }
 async function updateProject(project: definitions['projects']) {
-  delete project.profiles
+  delete project.profiles;
   const { data, error }: PostgrestResponse<definitions['projects']> = await supabase.from('projects').upsert(project);
   if (error) {
     throw error;
