@@ -46,11 +46,10 @@ export default function useProject() {
     }
     setProject(data);
   }
-  async function createProject({ projectname }: { projectname: string | null }) {
+  async function createProject({ projectname }: { projectname: string }) {
     try {
-      if (!projectname) {
-        alert('please set project name');
-        return;
+      if (projectname === '') {
+        throw new Error('please set project name');
       }
       setLoading(true);
       const user = supabase.auth.user();
@@ -71,8 +70,6 @@ export default function useProject() {
         throw new Error("can't create data");
       }
       setProject(data[0]);
-    } catch (error: unknown) {
-      alert((error as Error).message);
     } finally {
       setLoading(false);
     }
