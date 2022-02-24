@@ -55,7 +55,6 @@ export default function useProject() {
       const user = supabase.auth.user();
       if (!user?.id) {
         throw new Error('not logged in');
-        return;
       }
       const newdata: {
         owner_user_id: string;
