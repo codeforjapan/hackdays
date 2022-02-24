@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { ProjectService } from '../services/projects.service';
 import { definitions } from '../types/supabase';
 import { useT } from '@transifex/react';
-import { debuglog } from '../utils/commonTools';
 import { supabase } from '../utils/supabaseClient';
 export const EditablePropStr = [
   'name',
@@ -77,7 +76,6 @@ export default function useProject() {
     const data = await ProjectService.updateProject(newproject).catch((e: unknown) => {
       throw e;
     });
-    debuglog(data);
     // set new data
     setProject(data);
   };
