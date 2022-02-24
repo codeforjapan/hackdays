@@ -13,7 +13,7 @@ describe('useProject', () => {
       result.current.getProject(projectid);
     });
     await waitFor(() => {
-      expect(result.current.project.id).toEqual(projectid);
+      expect(result.current.projectState.project.id).toEqual(projectid);
     });
   });
 });

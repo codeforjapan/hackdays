@@ -19,10 +19,10 @@ async function getUser(id: string) {
   if (error && status !== 406) {
     throw error;
   }
-  if (!data) {
+  if (!data.data) {
     throw new Error("can't retlieve data");
   }
-  return data;
+  return data.data;
 }
 async function updateUser(updates: UpdateUserServiceParam) {
   return supabase.from('profiles').upsert(updates, {

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { ProjectService } from '../services/projects.service';
 import { definitions } from '../types/supabase';
 import { useT } from '@transifex/react';
-import { debug } from '../utils/commonTools';
+import { debuglog } from '../utils/commonTools';
 import { supabase } from '../utils/supabaseClient';
 export const EditablePropStr = [
   'name',
@@ -16,11 +16,22 @@ export const EditablePropStr = [
 ] as const;
 
 export type EditableProp = typeof EditablePropStr[number];
-
+export type ProjectType = definitions['projects'];
+export type ProjectState = {
+  loading: boolean;
+  project: ProjectType | null;
+};
 export default function useProject() {
   const t = useT();
-  const [project, setProject] = useState<definitions['projects'] | null>();
-  const [loading, setLoading] = useState(false);
+  const [projectState, setProjectState] = useState<ProjectState>({ project: null, loading: false });
+  function setProject(project: ProjectType) {
+    projectState.project = project;
+    setProjectState(projectState);
+  }
+  function setLoading(loading: boolean) {
+    projectState.loading = loading;
+    setProjectState(projectState);
+  }
 
   const getLabel = (key: EditableProp) => {
     const labels: { [name: string]: string } = {
@@ -72,18 +83,17 @@ export default function useProject() {
       setLoading(false);
     }
   }
-  const editProject = async (newproject: definitions['projects']) => {
+  const editProject = async (newproject: ProjectType) => {
     const data = await ProjectService.updateProject(newproject).catch((e: unknown) => {
       throw e;
     });
-    debug(data);
+    debuglog(data);
     // set new data
     setProject(data);
   };
 
   return {
-    project,
-    loading,
+    projectState,
     getProject,
     editProject,
     createProject,

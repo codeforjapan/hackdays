@@ -1,7 +1,6 @@
 import { Session } from '@supabase/supabase-js';
 import { useCallback, useEffect, useState } from 'react';
 import { UpdateUserServiceParam, UserService } from '../services/users.service';
-import { debug } from '../utils/commonTools';
 import { supabase } from '../utils/supabaseClient';
 
 export type UserData = {
@@ -15,15 +14,29 @@ export type UpdateUserParam = {
   avatar_url: string | null;
 };
 export type UserState = {
-  user: UserData;
   loading: boolean;
-  session: Session;
+  user: UserData;
+  session: Session | null;
 };
 export default function useUser() {
-  const [session, setSession] = useState<Session>();
-  const [loading, setLoading] = useState(false);
-  const [user, setUser] = useState<UserData>(null);
-  const userState = { session, loading, user };
+  const [userState, setState] = useState<UserState>({
+    loading: false,
+    user: { username: '', website: '', avatar_url: '' },
+    session: null,
+  });
+  function setSession(session: Session) {
+    userState.session = session;
+    setState(userState);
+  }
+  function setLoading(loading: boolean) {
+    userState.loading = loading;
+    setState(userState);
+  }
+  function setUser(user: UserData) {
+    userState.user = user;
+    setState(userState);
+  }
+
   useEffect(() => {
     const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
       if (session != null) setSession(session);
@@ -70,14 +83,10 @@ export default function useUser() {
   const getProfile = useCallback(async (id: string) => {
     try {
       setLoading(true);
-
-      const { data, error, status } = await UserService.getUser(id);
-
-      if (error && status !== 406) {
+      const result = await UserService.getUser(id).catch((error: unknown) => {
         throw error;
-      }
-      debug('got user data: ', data);
-      setUser(data);
+      });
+      setUser(result.data);
     } catch (error: unknown) {
       if (error instanceof Error) alert(error.message);
     } finally {
@@ -114,6 +123,7 @@ export default function useUser() {
     signInWithGithub,
     signOut,
     getMyProfile,
+    getProfile,
     updateProfile,
   };
 }

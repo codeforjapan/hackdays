@@ -2,7 +2,6 @@ import { renderHook, act } from '@testing-library/react-hooks';
 import useUser from '../../../src/hooks/useUser';
 import { supabase } from '../../../src/utils/supabaseClient';
 import { v4 as uuidv4 } from 'uuid';
-import { waitFor } from '@testing-library/react';
 import { UserService } from '../../../src/services/users.service';
 
 describe('useUser', () => {
@@ -24,13 +23,28 @@ describe('useUser', () => {
   });
   it('should return my profile', async () => {
     supabase.auth.user = jest.fn().mockReturnValue({ id: uuidv4() });
-    UserService.getUser = jest.fn().mockResolvedValue({ data: { username: 'myusername' } });
+    UserService.getUser = jest.fn().mockResolvedValue({
+      data: { username: 'myusername', website: 'https://test.com', avatar_url: 'https://avatar.com/' },
+    });
     const { result } = renderHook(() => useUser());
     await act(async () => {
-      result.current.getMyProfile();
-    });
-    await waitFor(() => {
+      await result.current.getMyProfile();
       expect(result.current.userState.user.username).toEqual('myusername');
+    });
+  });
+  it('should return specific profile', async () => {
+    const uuid = uuidv4();
+    const { result } = renderHook(() => useUser());
+    UserService.getUser = jest.fn().mockResolvedValue({
+      data: { username: 'myusername', website: 'https://test.com', avatar_url: 'https://avatar.com/' },
+    });
+    await act(async () => {
+      await result.current.getProfile(uuid);
+      expect(result.current.userState.user).toEqual({
+        username: 'myusername',
+        website: 'https://test.com',
+        avatar_url: 'https://avatar.com/',
+      });
     });
   });
   /**
