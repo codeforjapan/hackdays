@@ -8,49 +8,49 @@ import { supabase } from '../../../utils/supabaseClient';
 
 export default function SProject({ projectid }: { projectid: string }) {
   const [editable, setEditable] = useState(false);
-  const { project, getProject, editProject, getLabel } = useProject();
+  const { projectState, getProject, updateProject, getLabel } = useProject();
   useEffect(() => {
     getProject(projectid);
   }, []);
   useEffect(() => {
-    if (project) {
+    if (projectState.project) {
       const user = supabase.auth.user();
-      setEditable(project.owner_user_id === user?.id);
+      setEditable(projectState.project.owner_user_id === user?.id);
     }
-  }, [project]);
+  }, [projectState.project]);
 
-  const updateProject: onUpdatePropFunction = async (property: string, nextValue: string) => {
-    if (project) {
+  const onUpdateProject: onUpdatePropFunction = async (property: string, nextValue: string) => {
+    if (projectState.project) {
       const k: EditableProp = property as EditableProp;
-      const newproject = { ...project };
+      const newproject = { ...projectState.project };
       newproject[k] = nextValue;
-      editProject(newproject);
+      updateProject(newproject);
     }
   };
   const isJoined = () => {
     let joined = false;
     const user = supabase.auth.user();
-    if (user && project?.profiles) {
-      joined = project.profiles.map((m) => m.id).includes(user.id);
+    if (user && projectState.project?.profiles) {
+      joined = projectState.project.profiles.map((m) => m.id).includes(user.id);
     }
     return joined;
   };
   const members = () => {
-    return project?.profiles;
+    return projectState.project?.profiles;
   };
 
   return (
     <Stack spacing={4}>
-      <Heading as='h1'>{project ? project.name : ''}</Heading>
+      <Heading as='h1'>{projectState.project ? projectState.project.name : ''}</Heading>
       {EditablePropStr.filter((v) => v != 'name').map((v: string, index) => {
         const val = v as EditableProp;
-        const defaultval = project ? (project[val] ? project[val] : '') : '';
+        const defaultval = projectState.project ? (projectState.project[val] ? projectState.project[val] : '') : '';
         return (
           <EditableProperty
             label={getLabel(val)}
             defaultValue={defaultval}
             property={val}
-            onUpdateProp={updateProject}
+            onUpdateProp={onUpdateProject}
             editable={editable}
             key={index}
           />

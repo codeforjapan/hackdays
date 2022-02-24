@@ -7,7 +7,7 @@ import { useT } from '@transifex/react';
 export default function Auth() {
   const t = useT();
   const [email, setEmail] = useState('');
-  const { signInWithGithub, handleLogin, loading } = useUser();
+  const { userState, signInWithGithub, handleLogin } = useUser();
 
   const onClickLogin = () => {
     handleLogin(email);
@@ -18,7 +18,7 @@ export default function Auth() {
         {t('Find wonderful projects')}
       </Heading>
       <Stack spacing={6} py={4} px={10}>
-        <PrimaryButton onClick={signInWithGithub} loading={loading}>
+        <PrimaryButton onClick={signInWithGithub} loading={userState.loading}>
           Login with GitHub
         </PrimaryButton>
       </Stack>
@@ -31,7 +31,7 @@ export default function Auth() {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
-        <PrimaryButton onClick={onClickLogin} loading={loading}>
+        <PrimaryButton onClick={onClickLogin} loading={userState.loading}>
           {t('Send magic link')}
         </PrimaryButton>
       </Stack>

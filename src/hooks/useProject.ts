@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { ProjectService } from '../services/projects.service';
 import { definitions } from '../types/supabase';
 import { useT } from '@transifex/react';
-import { debug } from '../utils/commonTools';
 import { supabase } from '../utils/supabaseClient';
 export const EditablePropStr = [
   'name',
@@ -16,11 +15,16 @@ export const EditablePropStr = [
 ] as const;
 
 export type EditableProp = typeof EditablePropStr[number];
-
+export type ProjectType = definitions['projects'];
+export type ProjectState = {
+  loading: boolean;
+  project: ProjectType | null;
+};
 export default function useProject() {
   const t = useT();
-  const [project, setProject] = useState<definitions['projects'] | null>();
-  const [loading, setLoading] = useState(false);
+  const [project, setProject] = useState<ProjectType>();
+  const [loading, setLoading] = useState<boolean>(false);
+  const projectState = { project, loading };
 
   const getLabel = (key: EditableProp) => {
     const labels: { [name: string]: string } = {
@@ -41,17 +45,15 @@ export default function useProject() {
     }
     setProject(data);
   }
-  async function createProject({ projectname }: { projectname: string | null }) {
+  async function createProject({ projectname }: { projectname: string }) {
     try {
-      if (!projectname) {
-        alert('please set project name');
-        return;
+      if (projectname === '') {
+        throw new Error('please set project name');
       }
       setLoading(true);
       const user = supabase.auth.user();
       if (!user?.id) {
         throw new Error('not logged in');
-        return;
       }
       const newdata: {
         owner_user_id: string;
@@ -66,26 +68,22 @@ export default function useProject() {
         throw new Error("can't create data");
       }
       setProject(data[0]);
-    } catch (error: unknown) {
-      alert((error as Error).message);
     } finally {
       setLoading(false);
     }
   }
-  const editProject = async (newproject: definitions['projects']) => {
+  const updateProject = async (newproject: ProjectType) => {
     const data = await ProjectService.updateProject(newproject).catch((e: unknown) => {
       throw e;
     });
-    debug(data);
     // set new data
     setProject(data);
   };
 
   return {
-    project,
-    loading,
+    projectState,
     getProject,
-    editProject,
+    updateProject,
     createProject,
     getLabel,
   };

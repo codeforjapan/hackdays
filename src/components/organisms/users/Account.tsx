@@ -11,19 +11,19 @@ export default function Account({ session }: { session: Session }) {
   const [username, setUsername] = useState<string | null>(null);
   const [website, setWebsite] = useState<string | null>(null);
   const [avatar_url, setAvatarUrl] = useState<string | null>(null);
-  const { getMyProfile, updateProfile, loading, user } = useUser();
+  const { userState, getMyProfile, updateProfile } = useUser();
   useEffect(() => {
     getMyProfile();
   }, [session]);
   useEffect(() => {
-    if (user) {
-      setUsername(user.username);
-      setWebsite(user.website);
-      if (user.avatar_url) {
-        setAvatarUrl(user.avatar_url);
+    if (userState.user) {
+      setUsername(userState.user.username);
+      setWebsite(userState.user.website);
+      if (userState.user.avatar_url) {
+        setAvatarUrl(userState.user.avatar_url);
       }
     }
-  }, [user]);
+  }, [userState.user]);
   function clickUpdate(data: UpdateUserParam) {
     updateProfile(data).catch((error: Error) => {
       alert(error);
@@ -53,8 +53,8 @@ export default function Account({ session }: { session: Session }) {
           <FormLabel htmlFor='website'>Website:</FormLabel>
           <Input id='website' type='website' value={website || ''} onChange={(e) => setWebsite(e.target.value)} />
         </FormControl>
-        <PrimaryButton onClick={() => clickUpdate({ username, website, avatar_url })} disabled={loading}>
-          {loading ? 'Loading ...' : 'Update'}
+        <PrimaryButton onClick={() => clickUpdate({ username, website, avatar_url })} disabled={userState.loading}>
+          {userState.loading ? 'Loading ...' : 'Update'}
         </PrimaryButton>
         <Button className='button block' onClick={() => supabase.auth.signOut()}>
           Sign Out

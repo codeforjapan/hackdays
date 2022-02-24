@@ -1,6 +1,6 @@
 import { Session } from '@supabase/supabase-js';
 import { useCallback, useEffect, useState } from 'react';
-import { debug } from '../utils/commonTools';
+import { UpdateUserServiceParam, UserService } from '../services/users.service';
 import { supabase } from '../utils/supabaseClient';
 
 export type UserData = {
@@ -13,10 +13,21 @@ export type UpdateUserParam = {
   website: string | null;
   avatar_url: string | null;
 };
+export type UserState = {
+  loading: boolean;
+  user: UserData;
+  session: Session | null;
+};
 export default function useUser() {
+  const [user, setUser] = useState<UserData>();
+  const [loading, setLoading] = useState<boolean>(false);
   const [session, setSession] = useState<Session>();
-  const [loading, setLoading] = useState(false);
-  const [user, setUser] = useState<UserData>(null);
+  const userState = {
+    loading,
+    user,
+    session,
+  };
+
   useEffect(() => {
     const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
       if (session != null) setSession(session);
@@ -33,11 +44,8 @@ export default function useUser() {
         email,
       });
       if (error) throw error;
+      // @todo implement login success flow
       alert('Check your email for the login link!');
-    } catch (error: unknown) {
-      if (error instanceof Error) {
-        alert(error.message);
-      }
     } finally {
       setLoading(false);
     }
@@ -63,20 +71,10 @@ export default function useUser() {
   const getProfile = useCallback(async (id: string) => {
     try {
       setLoading(true);
-
-      const { data, error, status } = await supabase
-        .from('profiles')
-        .select(`username, website, avatar_url`)
-        .eq('id', id)
-        .single();
-
-      if (error && status !== 406) {
+      const result = await UserService.getUser(id).catch((error: unknown) => {
         throw error;
-      }
-      debug('got user data: ', data);
-      setUser(data);
-    } catch (error: unknown) {
-      if (error instanceof Error) alert(error.message);
+      });
+      setUser(result);
     } finally {
       setLoading(false);
     }
@@ -87,13 +85,7 @@ export default function useUser() {
       setLoading(true);
       const user = supabase.auth.user();
 
-      const updates: {
-        id: string | undefined;
-        username: string | null;
-        website: string | null;
-        avatar_url: string | null;
-        updated_at: Date;
-      } = {
+      const updates: UpdateUserServiceParam = {
         id: user?.id,
         username,
         website,
@@ -101,28 +93,23 @@ export default function useUser() {
         updated_at: new Date(),
       };
 
-      const { error } = await supabase.from('profiles').upsert(updates, {
-        returning: 'minimal', // Don't return the value after inserting
-      });
+      const { error } = await UserService.updateUser(updates);
 
       if (error) {
         throw error;
       }
-    } catch (error: unknown) {
-      alert((error as Error).message);
     } finally {
       setLoading(false);
     }
   }, []);
 
   return {
-    user,
-    loading,
-    session,
+    userState,
     handleLogin,
     signInWithGithub,
     signOut,
     getMyProfile,
+    getProfile,
     updateProfile,
   };
 }
