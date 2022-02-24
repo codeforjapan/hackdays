@@ -10,13 +10,17 @@ import useProject from '../../../hooks/useProject';
 export default function ProjectForm() {
   const [projectname, setProjectName] = useState<string | null>(null);
   const router = useRouter();
-  const { projectState, createProject } = useProject();
+  const { projectState, insertProject } = useProject();
   useEffect(() => {
     if (projectState.project) {
       router.replace(`/projects/${projectState.project.id}`);
     }
   }, [projectState.project]);
-
+  const clickInsertProject = (projectname: string | null) => {
+    if (projectname) {
+      insertProject({ projectname });
+    }
+  };
   return (
     <Box shadow='md'>
       <Stack spacing={4} py={4} px={10}>
@@ -29,7 +33,10 @@ export default function ProjectForm() {
             onChange={(e) => setProjectName(e.target.value)}
           />
         </FormControl>
-        <PrimaryButton onClick={() => createProject({ projectname })} disabled={projectState.loading}>
+        <PrimaryButton
+          onClick={() => clickInsertProject(projectname)}
+          disabled={projectState.loading || projectname == null || projectname.length == 0}
+        >
           {projectState.loading ? 'Loading ...' : 'Create'}
         </PrimaryButton>
       </Stack>

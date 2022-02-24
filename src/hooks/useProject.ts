@@ -45,7 +45,7 @@ export default function useProject() {
     }
     setProject(data);
   }
-  async function createProject({ projectname }: { projectname: string }) {
+  async function insertProject({ projectname }: { projectname: string }) {
     try {
       if (projectname === '') {
         throw new Error('please set project name');
@@ -63,7 +63,7 @@ export default function useProject() {
         name: projectname,
       };
       // create new project
-      const data = await ProjectService.createProject(newdata);
+      const data = await ProjectService.insertProject(newdata);
       if (!data) {
         throw new Error("can't create data");
       }
@@ -84,7 +84,7 @@ export default function useProject() {
     projectState,
     getProject,
     updateProject,
-    createProject,
+    insertProject,
     getLabel,
   };
 }

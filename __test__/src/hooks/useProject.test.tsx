@@ -22,7 +22,7 @@ describe('useProject', () => {
     let errorResult = false;
     await act(async () => {
       try {
-        await result.current.createProject({ projectname: '' });
+        await result.current.insertProject({ projectname: '' });
       } catch (e: unknown) {
         errorResult = true;
       }
@@ -36,7 +36,7 @@ describe('useProject', () => {
     let errorResult = false;
     await act(async () => {
       try {
-        await result.current.createProject({ projectname: 'new project' });
+        await result.current.insertProject({ projectname: 'new project' });
       } catch (e: unknown) {
         errorResult = true;
       }
@@ -50,7 +50,7 @@ describe('useProject', () => {
     supabase.auth.user = jest.fn().mockReturnValue({ id: myid });
     const newid = uuidv4();
     const projectname = 'test project';
-    ProjectService.createProject = jest.fn().mockReturnValue([
+    ProjectService.insertProject = jest.fn().mockReturnValue([
       {
         id: newid,
         owner_user_id: myid,
@@ -58,9 +58,9 @@ describe('useProject', () => {
       },
     ]);
     await act(async () => {
-      await result.current.createProject({ projectname: projectname });
+      await result.current.insertProject({ projectname: projectname });
     });
-    expect(ProjectService.createProject).toBeCalledWith({ name: projectname, owner_user_id: myid });
+    expect(ProjectService.insertProject).toBeCalledWith({ name: projectname, owner_user_id: myid });
     expect(result.current.projectState.project).toEqual({
       id: newid,
       owner_user_id: myid,

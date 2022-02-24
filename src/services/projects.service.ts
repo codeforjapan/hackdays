@@ -5,7 +5,7 @@ import { supabase } from '../utils/supabaseClient';
 export const ProjectService = {
   getProjects,
   getProject,
-  createProject,
+  insertProject,
   updateProject,
   joinProject,
   leaveProject,
@@ -52,7 +52,7 @@ async function updateProject(project: definitions['projects']) {
   }
   return data[0];
 }
-async function createProject(newdata: {
+async function insertProject(newdata: {
   owner_user_id: string;
   name: string;
   purpose?: string;
