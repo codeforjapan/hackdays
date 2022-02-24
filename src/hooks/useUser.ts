@@ -44,11 +44,8 @@ export default function useUser() {
         email,
       });
       if (error) throw error;
+      // @todo implement login success flow
       alert('Check your email for the login link!');
-    } catch (error: unknown) {
-      if (error instanceof Error) {
-        alert(error.message);
-      }
     } finally {
       setLoading(false);
     }
@@ -78,8 +75,6 @@ export default function useUser() {
         throw error;
       });
       setUser(result);
-    } catch (error: unknown) {
-      if (error instanceof Error) alert(error.message);
     } finally {
       setLoading(false);
     }
