@@ -3,8 +3,6 @@ import useUser from '../../../src/hooks/useUser';
 import { supabase } from '../../../src/utils/supabaseClient';
 import { v4 as uuidv4 } from 'uuid';
 import { UserService } from '../../../src/services/users.service';
-import { waitFor } from '@testing-library/react';
-import { resourceLimits } from 'worker_threads';
 
 describe('useUser', () => {
   beforeEach(() => {
