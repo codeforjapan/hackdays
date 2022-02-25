@@ -1,5 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react';
-import { renderHook, act } from '@testing-library/react-hooks';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import Auth from '../../../../../src/components/organisms/users/Auth';
 import useUser from '../../../../../src/hooks/useUser';
