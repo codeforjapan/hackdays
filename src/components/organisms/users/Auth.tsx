@@ -19,7 +19,7 @@ export default function Auth() {
       </Heading>
       <Stack spacing={6} py={4} px={10}>
         <PrimaryButton onClick={signInWithGithub} loading={userState.loading}>
-          Login with GitHub
+          {t('Login with GitHub')}
         </PrimaryButton>
       </Stack>
       <Text textAlign='center'> {t('Sign in via magic link with your email below')} </Text>
