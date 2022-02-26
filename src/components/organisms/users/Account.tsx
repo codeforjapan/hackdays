@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { supabase } from '../../../utils/supabaseClient';
 import { Session } from '@supabase/supabase-js';
 import { Box, Stack, FormControl, FormLabel, Input, Button } from '@chakra-ui/react';
@@ -8,9 +8,9 @@ import useUser, { UpdateUserParam } from '../../../hooks/useUser';
 
 export default function Account({ session }: { session: Session }) {
   // const [loading, setLoading] = useState<boolean>(true);
-  const [username, setUsername] = useState<string | null>(null);
-  const [website, setWebsite] = useState<string | null>(null);
-  const [avatar_url, setAvatarUrl] = useState<string | null>(null);
+  const [username, setUsername] = React.useState<string | null>(null);
+  const [website, setWebsite] = React.useState<string | null>(null);
+  const [avatar_url, setAvatarUrl] = React.useState<string | null>(null);
   const { userState, getMyProfile, updateProfile } = useUser();
   useEffect(() => {
     getMyProfile();
