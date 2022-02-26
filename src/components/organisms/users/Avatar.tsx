@@ -27,7 +27,7 @@ export default function Avatar({
       {avatarUrl ? (
         <Image src={avatarUrl} alt='Avatar' className='avatar image' width={size} height={size} />
       ) : (
-        <Image src='/images/cat.png' className='avatar no-image' height={size} width={size} />
+        <Image src='/images/cat.png' className='avatar no-image' height={size} width={size} alt='Default Avatar' />
       )}
       <div style={{ width: size }}>
         <label className='button primary block' htmlFor='single'>
