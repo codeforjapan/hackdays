@@ -1,5 +1,5 @@
-import React, { Dispatch } from 'react';
-import { render, screen, waitFor } from '@testing-library/react';
+import React from 'react';
+import { render, screen } from '@testing-library/react';
 import Account from '../../../../../src/components/organisms/users/Account';
 import useUser from '../../../../../src/hooks/useUser';
 import { supabase } from '../../../../../src/utils/supabaseClient';
