@@ -2,7 +2,6 @@ import { FC, useEffect, useRef, useState } from 'react';
 import { ProjectService } from '../../../services/projects.service';
 import { supabase } from '../../../utils/supabaseClient';
 import { PrimaryButton } from '../../atoms/button/PrimaryButton';
-import { debug } from '../../../utils/commonTools';
 import { useT } from '@transifex/react';
 
 type Props = {
@@ -37,7 +36,6 @@ const MJoinProject: FC<Props> = ({ joined = false, project_id }) => {
       }
       requesting.current = false;
     } catch (error) {
-      debug(error);
       requesting.current = false;
     }
   };
