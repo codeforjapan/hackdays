@@ -11,7 +11,7 @@ export default function Avatar({
   size: number;
   onUpload: (url: string) => void;
 }) {
-  const { avatarUrl, avatarUploading, uploadAvatar, downloadAvatar } = useAvatar({ onUpload });
+  const { state, uploadAvatar, downloadAvatar } = useAvatar({ onUpload });
   useEffect(() => {
     if (url) downloadAvatar(url);
   }, [url]);
@@ -24,14 +24,14 @@ export default function Avatar({
   }
   return (
     <div>
-      {avatarUrl ? (
-        <Image src={avatarUrl} alt='Avatar' className='avatar image' width={size} height={size} />
+      {state.avatarUrl ? (
+        <Image src={state.avatarUrl} alt='Avatar' className='avatar image' width={size} height={size} />
       ) : (
         <Image src='/images/cat.png' className='avatar no-image' height={size} width={size} alt='Default Avatar' />
       )}
       <div style={{ width: size }}>
         <label className='button primary block' htmlFor='single'>
-          {avatarUploading ? 'Uploading ...' : 'Upload'}
+          {state.uploading ? 'Uploading ...' : 'Upload'}
         </label>
         <input
           style={{
@@ -42,7 +42,7 @@ export default function Avatar({
           id='single'
           accept='image/*'
           onChange={fileUpload}
-          disabled={avatarUploading}
+          disabled={state.uploading}
         />
       </div>
     </div>

@@ -4,6 +4,10 @@ import { supabase } from '../utils/supabaseClient';
 export default function useAvatar({ onUpload }: { onUpload: (url: string) => void }) {
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
   const [avatarUploading, setUploading] = useState(false);
+  const state = {
+    avatarUrl: avatarUrl,
+    uploading: avatarUploading,
+  };
   const downloadAvatar = useCallback(async (path: string) => {
     try {
       const { data, error } = await supabase.storage.from('avatars').download(path);
@@ -42,8 +46,7 @@ export default function useAvatar({ onUpload }: { onUpload: (url: string) => voi
     }
   }, []);
   return {
-    avatarUploading,
-    avatarUrl,
+    state,
     downloadAvatar,
     uploadAvatar,
   };
