@@ -26,6 +26,7 @@ const MJoinProject: FC<Props> = ({ joined = false, project_id }) => {
     }
     if (isJoined === null || requesting.current) return;
     requesting.current = true;
+    console.log('requesting', requesting.current);
     try {
       if (isJoined) {
         await ProjectService.leaveProject({ profile_id: user.id, project_id: project_id });
@@ -35,13 +36,15 @@ const MJoinProject: FC<Props> = ({ joined = false, project_id }) => {
         setIsJoined(true);
       }
       requesting.current = false;
+      console.log('requesting', requesting.current);
     } catch (error) {
       requesting.current = false;
+      console.log('requesting', requesting.current);
     }
   };
 
   return (
-    <PrimaryButton onClick={() => handleClick()}>
+    <PrimaryButton onClick={() => handleClick()} disabled={requesting.current}>
       {isJoined ? t('Leave this project') : t('Join this project')}
     </PrimaryButton>
   );
