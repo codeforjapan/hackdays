@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import Auth from '../../../../../src/components/organisms/users/Auth';
-import useUser from '../../../../../src/hooks/useUser';
-jest.mock('../../../../../src/hooks/useUser');
+import Auth from '../../../../components/organisms/users/Auth';
+import useUser from '../../../../hooks/useUser';
+jest.mock('../../../../hooks/useUser');
 
 describe('Auth component', () => {
   beforeEach(() => {

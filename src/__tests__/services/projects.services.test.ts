@@ -1,5 +1,5 @@
-import { ProjectService } from '../../../src/services/projects.service';
-import { supabase } from '../../../src/utils/supabaseClient';
+import { ProjectService } from '../../services/projects.service';
+import { supabase } from '../../utils/supabaseClient';
 
 describe('ProjectService', () => {
   it('should get first 30 projects', async () => {

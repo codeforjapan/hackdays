@@ -1,4 +1,4 @@
-import { EditableProperty } from '../../../../../src/components/molecules/forms/EditableProperty';
+import { EditableProperty } from '../../../../components/molecules/forms/EditableProperty';
 import userEvent from '@testing-library/user-event';
 import { render, screen, waitFor } from '@testing-library/react';
 

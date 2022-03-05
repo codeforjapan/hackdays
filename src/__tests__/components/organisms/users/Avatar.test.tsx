@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
-import Avatar from '../../../../../src/components/organisms/users/Avatar';
+import Avatar from '../../../../components/organisms/users/Avatar';
 import userEvent from '@testing-library/user-event';
-import useAvatar from '../../../../../src/hooks/useAvatar';
+import useAvatar from '../../../../hooks/useAvatar';
 
 describe('Avatar test', () => {
   it('should show default avatar', async () => {
