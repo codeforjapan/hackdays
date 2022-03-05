@@ -28,7 +28,7 @@ describe('Avatar test', () => {
         uploading: false,
         avatarUrl: '',
       },
-      uploadAvatar: mockedUpload,
+      uploadAndSetUrl: mockedUpload,
     }));
     expect.assertions(1);
     const user = userEvent.setup();

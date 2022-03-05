@@ -11,7 +11,7 @@ export default function Avatar({
   size: number;
   onUpload: (url: string) => void;
 }) {
-  const { state, uploadAvatar, downloadAvatar } = useAvatar({ onUpload });
+  const { state, uploadAndSetUrl, downloadAvatar } = useAvatar({ onUpload });
   useEffect(() => {
     if (url) downloadAvatar(url);
   }, [url]);
@@ -20,7 +20,7 @@ export default function Avatar({
       throw new Error('You must select an image to upload.');
     }
 
-    uploadAvatar(event.target.files[0]);
+    uploadAndSetUrl(event.target.files[0]);
   }
   return (
     <div>
