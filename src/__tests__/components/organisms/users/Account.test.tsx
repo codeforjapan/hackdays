@@ -99,11 +99,14 @@ describe('Account component', () => {
       updateProfile: mockedUpdateProfile,
       getMyProfile: jest.fn(),
     }));
+    // mock authentication
     supabase.auth.session = jest.fn();
     const session = supabase.auth.session();
     render(<Account session={session} />);
+    // type then user profile
     await user.type(screen.getByLabelText('Name:'), 'Great Contributor');
     await user.type(screen.getByLabelText('Website:'), 'https://my.website/');
+    // click update
     await user.click(screen.getByText('Update'));
     expect(mockedUpdateProfile).toBeCalledWith({
       username: 'Great Contributor',
