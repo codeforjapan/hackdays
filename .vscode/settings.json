@@ -6,6 +6,6 @@
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true // Use ESLint on save
   },
-  "jest.jestCommandLine": "yarn test", // setting for vscode-jest plugin
+  "jest.jestCommandLine": "yarn test:ci", // setting for vscode-jest plugin
   "jest.autoRun": { "watch": true }
 }

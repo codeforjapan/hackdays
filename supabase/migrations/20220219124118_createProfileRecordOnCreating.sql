@@ -28,3 +28,7 @@ GRANT EXECUTE ON FUNCTION public.handle_new_user() TO PUBLIC;
 GRANT EXECUTE ON FUNCTION public.handle_new_user() TO anon;
 
 GRANT EXECUTE ON FUNCTION public.handle_new_user() TO service_role;
+
+create trigger on_auth_user_created
+  after insert on auth.users
+  for each row execute procedure public.handle_new_user();

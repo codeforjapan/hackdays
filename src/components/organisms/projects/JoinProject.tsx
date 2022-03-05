@@ -13,6 +13,7 @@ const MJoinProject: FC<Props> = ({ joined = false, project_id }) => {
   const [isJoined, setIsJoined] = useState(joined);
   const requesting = useRef(false);
   const t = useT();
+
   useEffect(() => {
     setIsJoined(joined);
   }, [joined]);
@@ -20,7 +21,7 @@ const MJoinProject: FC<Props> = ({ joined = false, project_id }) => {
   const handleClick = async () => {
     const user = supabase.auth.user();
     if (!user) {
-      alert('ログインしてね。');
+      alert(t('you need to login first'));
       return;
     }
     if (isJoined === null || requesting.current) return;
@@ -35,7 +36,6 @@ const MJoinProject: FC<Props> = ({ joined = false, project_id }) => {
       }
       requesting.current = false;
     } catch (error) {
-      console.log(error);
       requesting.current = false;
     }
   };
