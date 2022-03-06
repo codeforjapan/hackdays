@@ -10,9 +10,10 @@
     "txjs-push": "source .env.development.local; export TRANSIFEX_TOKEN TRANSIFEX_SECRET; txjs-cli push src/",
     "cypress": "cypress open",
     "cypress:headless": "cypress run",
-    "test": "jest --watch",
-    "test:ci": "jest --ci",
-    "test:coverage": "jest --coverage",
+    "test": "jest --watch ./src",
+    "test:ci": "jest --ci ./src",
+    "test:coverage": "jest --coverage ./src",
+    "test:supabase": "jest --ci ./supabase/__tests",
     "generate-ts": "source .env.development.local; node_modules/.bin/openapi-typescript ${NEXT_PUBLIC_SUPABASE_URL}/rest/v1/?apikey=${NEXT_PUBLIC_SUPABASE_ANON_KEY} --output src/types/supabase.ts",
     "prepare": "husky install"
   },

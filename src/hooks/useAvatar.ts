@@ -32,6 +32,7 @@ export default function useAvatar({ onUpload }: { onUpload: (url: string) => voi
       setAvatarUrl(url);
     } catch (error) {
       if (error instanceof Error) console.log('Error downloading image: ', error.message);
+      throw error;
     }
   }, []);
   /**
@@ -59,7 +60,8 @@ export default function useAvatar({ onUpload }: { onUpload: (url: string) => voi
       setUploadSuccess(true);
       return filePath;
     } catch (error) {
-      if (error instanceof Error) alert(error.message);
+      if (error instanceof Error) console.log('Error uploading image: ', error.message);
+      throw error;
     } finally {
       setUploading(false);
     }
