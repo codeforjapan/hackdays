@@ -8,6 +8,10 @@ describe('useUser', () => {
   beforeEach(() => {
     window.alert = jest.fn(); // disable alert function
   });
+  afterEach(() => {
+    jest.clearAllMocks();
+    jest.fn().mockRestore();
+  });
   it('should call auth.signin with GitHub', () => {
     expect.assertions(1);
     const { result } = renderHook(() => useUser());
@@ -44,17 +48,14 @@ describe('useUser', () => {
     // mock function for error return
     supabase.auth.user = jest.fn().mockReturnValue(null);
     const { result } = renderHook(() => useUser());
-    let errorResult = false;
     await act(async () => {
-      try {
+      const t = async () => {
         // this method should be failed
         await result.current.getMyProfile();
-      } catch {
-        errorResult = true;
-      }
+      };
+      expect(supabase.auth.user.call.length).toEqual(1);
+      expect(t).rejects.toThrow();
     });
-    expect(supabase.auth.user.call.length).toEqual(1);
-    expect(errorResult).toEqual(true);
   });
 
   it('should return my profile', async () => {
@@ -98,16 +99,13 @@ describe('useUser', () => {
     expect.assertions(1);
     const { result } = renderHook(() => useUser());
     // dummy function returning fake user
-    UserService.getUser = jest.fn().mockRejectedValue('user not found');
-    let errorResult = false;
+    UserService.getUser = jest.fn().mockRejectedValue(new Error('user not found'));
     await act(async () => {
       // get speficic user by id
-      try {
+      const t = async () => {
         await result.current.getProfile('nodata');
-      } catch {
-        errorResult = true;
-      }
-      expect(errorResult).toBe(true);
+      };
+      await expect(t).rejects.toThrow();
     });
   });
 
@@ -117,40 +115,52 @@ describe('useUser', () => {
     // dummy function updating user
     UserService.updateUser = jest.fn().mockResolvedValue(true);
     const { result } = renderHook(() => useUser());
-    let errorResult = false;
     await act(async () => {
       // run update hook
-      await result.current
-        .updateProfile({
+      const t = async () => {
+        await result.current.updateProfile({
           username: 'newuser',
           website: 'https://new.website/',
           avatar_url: 'avatar_url_data',
-        })
-        .catch(() => {
-          errorResult = true;
         });
+      };
+      // update should not be failed
+      expect(t).not.toEqual(false);
     });
-    // update should not be failed
-    expect(errorResult).toEqual(false);
+  });
+  it('should raise error when updating failed', async () => {
+    expect.assertions(1);
+    supabase.auth.user = jest.fn().mockReturnValue({ id: uuidv4() });
+    // dummy function updating user
+    UserService.updateUser = jest.fn().mockResolvedValue({ error: new Error('update failed') });
+    const { result } = renderHook(() => useUser());
+    await act(async () => {
+      // run update hook
+      const t = async () => {
+        await result.current.updateProfile({
+          username: 'newuser',
+          website: 'https://new.website/',
+          avatar_url: 'avatar_url_data',
+        });
+      };
+      expect(t).rejects.toThrow();
+    });
   });
   it('should raise Error when user update failed', async () => {
     expect.assertions(1);
     const { result } = renderHook(() => useUser());
     // dummy function returning fake user
-    UserService.updateUser = jest.fn().mockRejectedValue('update failed');
-    let errorResult = false;
+    UserService.updateUser = jest.fn().mockRejectedValue(new Error('update failed'));
     await act(async () => {
       // get speficic user by id
-      try {
+      const t = async () => {
         await result.current.updateProfile({
           username: 'bad user',
           website: 'https://new.website/',
           avatar_url: 'avatar_url_data',
         });
-      } catch {
-        errorResult = true;
-      }
-      expect(errorResult).toBe(true);
+      };
+      expect(t).rejects.toThrow();
     });
   });
 });
