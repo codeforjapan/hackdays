@@ -53,9 +53,16 @@ Replace the `YOUR_ANON_KEY_HERE` with the `anon key` copied at the previous step
 ```text
 NEXT_PUBLIC_SUPABASE_URL=http://localhost:54321
 NEXT_PUBLIC_SUPABASE_ANON_KEY=YOUR_ANON_KEY_HERE <- replace this
+NEXT_PUBLIC_SUPABASE_SERVICE_ROLE_KEY=YOUR_SERVICE_ROLE_KEY_HERE <- replace this
 ```
 
 Note: if you want to connect the app to the hosted instance e.g. [app.supabase.io](https://app.supabase.io/), please retrieve `API URL` and `anon key` from the dashboard. (see [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) for details)
+
+Create a new environment file for the test purpose
+
+```bash
+cp .env.development.local .env.test.local
+```
 
 ### Start development server
 
@@ -104,9 +111,11 @@ If you want to start the Next.js server and Cypress at the same time, the `start
 
 ### Unit tests (Jest + React Testing Library)
 
-The unit tests are built with Jest and React Testing Library, generally located at `__test__/` directory.
+The unit tests are built with Jest and React Testing Library, generally located at `src/__tests__/` directory.
 
 `yarn test` will run the tests in watch mode, where they will be re-run when a file is changed, while `yarn test:ci` will run them only once, which will be best for CI.
+
+Also, `yarn test:coverage` will check the test coverage.
 
 ## License
 
