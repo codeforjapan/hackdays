@@ -1,6 +1,6 @@
 import userEvent from '@testing-library/user-event';
 import { render, screen } from '@testing-library/react';
-import { PrimaryButton } from '../../../../../src/components/atoms/button/PrimaryButton';
+import { PrimaryButton } from '../../../../components/atoms/button/PrimaryButton';
 
 describe('PrimaryButton', () => {
   it('renders a child', () => {

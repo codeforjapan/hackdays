@@ -6,7 +6,7 @@ import { PrimaryButton } from '../../atoms/button/PrimaryButton';
 import Avatar from './Avatar';
 import useUser, { UpdateUserParam } from '../../../hooks/useUser';
 
-export default function Account({ session }: { session: Session }) {
+export default function Account({ session }: { session: Session | null }) {
   // const [loading, setLoading] = useState<boolean>(true);
   const [username, setUsername] = React.useState<string | null>(null);
   const [website, setWebsite] = React.useState<string | null>(null);

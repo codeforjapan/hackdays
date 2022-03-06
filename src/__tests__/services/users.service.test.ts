@@ -1,5 +1,5 @@
-import { UpdateUserServiceParam, UserService } from '../../../src/services/users.service';
-import { supabase } from '../../../src/utils/supabaseClient';
+import { UpdateUserServiceParam, UserService } from '../../services/users.service';
+import { supabase } from '../../utils/supabaseClient';
 describe('UserService test', () => {
   it('should get user', async () => {
     expect.assertions(1);

@@ -1,9 +1,9 @@
 import { renderHook, act } from '@testing-library/react-hooks';
-import useProject, { ProjectType } from '../../../src/hooks/useProject';
+import useProject, { ProjectType } from '../../hooks/useProject';
 import { v4 as uuidv4 } from 'uuid';
-import { ProjectService } from '../../../src/services/projects.service';
+import { ProjectService } from '../../services/projects.service';
 import { waitFor } from '@testing-library/react';
-import { supabase } from '../../../src/utils/supabaseClient';
+import { supabase } from '../../utils/supabaseClient';
 
 describe('useProject', () => {
   it('should return label data', () => {
@@ -76,7 +76,7 @@ describe('useProject', () => {
       result.current.getProject(projectid);
     });
     await waitFor(() => {
-      expect(result.current.projectState.project.id).toEqual(projectid);
+      expect(result.current.projectState.project?.id).toEqual(projectid);
     });
   });
   it('should update project', async () => {

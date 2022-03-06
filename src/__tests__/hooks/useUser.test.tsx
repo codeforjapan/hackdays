@@ -1,8 +1,8 @@
 import { renderHook, act } from '@testing-library/react-hooks';
-import useUser from '../../../src/hooks/useUser';
-import { supabase } from '../../../src/utils/supabaseClient';
+import useUser from '../../hooks/useUser';
+import { supabase } from '../../utils/supabaseClient';
 import { v4 as uuidv4 } from 'uuid';
-import { UserService } from '../../../src/services/users.service';
+import { UserService } from '../../services/users.service';
 
 describe('useUser', () => {
   beforeEach(() => {
@@ -71,7 +71,7 @@ describe('useUser', () => {
     await act(async () => {
       // get my profile
       await result.current.getMyProfile();
-      expect(result.current.userState.user.username).toEqual('myusername');
+      expect(result.current.userState.user?.username).toEqual('myusername');
     });
   });
   it('should return specific profile', async () => {

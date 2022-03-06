@@ -3,9 +3,10 @@ import { VFC, memo, ReactNode } from 'react';
 
 type Props = {
   children: ReactNode;
-  onClick: () => void;
+  onClick?: () => void;
   disabled?: boolean;
   loading?: boolean;
+  type?: 'button' | 'submit' | 'reset' | undefined;
 };
 export const PrimaryButton: VFC<Props> = memo(function foo(props: Props) {
   const { children, onClick, disabled = false, loading = false } = props;
@@ -17,6 +18,7 @@ export const PrimaryButton: VFC<Props> = memo(function foo(props: Props) {
       onClick={onClick}
       isLoading={loading}
       disabled={disabled || loading}
+      type={props.type}
     >
       {children}
     </Button>

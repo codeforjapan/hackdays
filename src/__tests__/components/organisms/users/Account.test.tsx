@@ -1,10 +1,10 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import Account from '../../../../../src/components/organisms/users/Account';
-import useUser from '../../../../../src/hooks/useUser';
-import { supabase } from '../../../../../src/utils/supabaseClient';
+import Account from '../../../../components/organisms/users/Account';
+import useUser from '../../../../hooks/useUser';
+import { supabase } from '../../../../utils/supabaseClient';
 import userEvent from '@testing-library/user-event';
-jest.mock('../../../../../src/hooks/useUser');
+jest.mock('../../../../hooks/useUser');
 describe('Account component', () => {
   afterEach(() => {
     jest.clearAllMocks();
@@ -57,6 +57,7 @@ describe('Account component', () => {
   it('should set Avatar url', async () => {
     const setState = jest.fn();
     const useStateSpy = jest.spyOn(React, 'useState');
+    // @ts-expect-error below line has expected ts compiling error but works.
     useStateSpy.mockImplementation((initialState) => [initialState, setState]);
     expect.assertions(2);
     // mock login method
@@ -98,11 +99,14 @@ describe('Account component', () => {
       updateProfile: mockedUpdateProfile,
       getMyProfile: jest.fn(),
     }));
+    // mock authentication
     supabase.auth.session = jest.fn();
     const session = supabase.auth.session();
     render(<Account session={session} />);
+    // type then user profile
     await user.type(screen.getByLabelText('Name:'), 'Great Contributor');
     await user.type(screen.getByLabelText('Website:'), 'https://my.website/');
+    // click update
     await user.click(screen.getByText('Update'));
     expect(mockedUpdateProfile).toBeCalledWith({
       username: 'Great Contributor',
