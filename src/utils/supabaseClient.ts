@@ -4,10 +4,12 @@ const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL == undefined ? '' : pro
 const supabaseAnonKey =
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY == undefined ? '' : process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
-const supabaseServiceKey =
-  process.env.NEXT_PUBLIC_SUPABASE_SERVICE_ROLE_KEY == undefined
-    ? ''
-    : process.env.NEXT_PUBLIC_SUPABASE_SERVICE_ROLE_KEY;
-
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
-export const supabase_admin = createClient(supabaseUrl, supabaseServiceKey);
+
+export const supabase_admin = () => {
+  if (process.env.NEXT_PUBLIC_SUPABASE_SERVICE_ROLE_KEY != undefined) {
+    return createClient(supabaseUrl, process.env.NEXT_PUBLIC_SUPABASE_SERVICE_ROLE_KEY);
+  } else {
+    return null;
+  }
+};
