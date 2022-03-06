@@ -23,7 +23,8 @@ This document is a table blueprint for the HackDay project.
 
 |column name         |type      |constraints              |
 |--------------------|----------|-------------------------|
-|id(PK)              |uuid      |default uuid_generate_v4 |
+|id(PK)              |uuid      |                         |
+|login_user_name(FK) |strings   |not null                 |
 |name                |strings   |not null                 |
 |self_introduction   |text      |not null                 |
 |icon_url            |strings   |                         |
@@ -31,13 +32,14 @@ This document is a table blueprint for the HackDay project.
 |facebook_url        |strings   |                         |
 |created_at          |timestamp |default current_timestamp|
 |updated_at          |timestamp |default current_timestamp|
+|deletion_date       |datetime  |                         |
 
 ### Users
 
 |column name         |type      |constraints              |
 |--------------------|----------|-------------------------|
-|user_id(FK)         |uuid      |not null                 |
-|login_user_name(PK) |strings   |unique                   |
+|id(PK)              |uuid      |not null                 |
+|login_user_name     |strings   |unique                   |
 
 ### Projects
 
