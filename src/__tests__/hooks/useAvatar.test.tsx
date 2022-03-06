@@ -29,7 +29,9 @@ describe('useAvatar test', () => {
   it('should download specified image', async () => {
     expect.assertions(1);
     // mock downaload function
-    const mockedDownload = jest.fn();
+    const mockedDownload = jest.fn().mockResolvedValue({ data: 'test' });
+    // mock URL.createObjectURL because it is failed on test
+    URL.createObjectURL = jest.fn().mockReturnValue('myobjecturl');
     // custom hook
     const { result } = renderHook(() => useAvatar({ onUpload: jest.fn() }));
     // set mocked function
