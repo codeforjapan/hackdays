@@ -16,8 +16,10 @@ describe('create users', () => {
   });
 });
 describe('login and create user', () => {
+  const admin = supabase_admin();
+  if (!admin) return;
   beforeAll(async () => {
-    const { data: user } = await supabase_admin.auth.api.createUser({
+    const { data: user } = await admin.auth.api.createUser({
       email: email,
       password: 'password',
     });
