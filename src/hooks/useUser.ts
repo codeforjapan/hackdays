@@ -71,9 +71,7 @@ export default function useUser() {
   const getProfile = useCallback(async (id: string) => {
     try {
       setLoading(true);
-      const result = await UserService.getUser(id).catch((error: unknown) => {
-        throw error;
-      });
+      const result = await UserService.getUser(id);
       setUser(result);
     } finally {
       setLoading(false);

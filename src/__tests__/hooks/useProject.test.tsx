@@ -6,6 +6,10 @@ import { waitFor } from '@testing-library/react';
 import { supabase } from '../../utils/supabaseClient';
 
 describe('useProject', () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+    jest.fn().mockRestore();
+  });
   it('should return label data', () => {
     const { result } = renderHook(() => useProject());
     expect(result.current.getLabel('purpose')).not.toBeNull();
@@ -19,28 +23,22 @@ describe('useProject', () => {
   it('should raise error when project name is not set', async () => {
     expect.assertions(1);
     const { result } = renderHook(() => useProject());
-    let errorResult = false;
     await act(async () => {
-      try {
+      const t = async () => {
         await result.current.insertProject({ projectname: '' });
-      } catch (e: unknown) {
-        errorResult = true;
-      }
-      expect(errorResult).toBe(true);
+      };
+      expect(t).rejects.toThrow();
     });
   });
   it('should raise error when user is not logged in', async () => {
     expect.assertions(1);
     const { result } = renderHook(() => useProject());
     supabase.auth.user = jest.fn().mockReturnValue(null);
-    let errorResult = false;
     await act(async () => {
-      try {
+      const t = async () => {
         await result.current.insertProject({ projectname: 'new project' });
-      } catch (e: unknown) {
-        errorResult = true;
-      }
-      expect(errorResult).toBe(true);
+      };
+      expect(t).rejects.toThrow();
     });
   });
   it('should create new project with current user id', async () => {
@@ -67,8 +65,22 @@ describe('useProject', () => {
       name: projectname,
     });
   });
+  it('should raise error when updating failed', async () => {
+    expect.assertions(1);
+    const { result } = renderHook(() => useProject());
+    const myid = uuidv4();
+    supabase.auth.user = jest.fn().mockReturnValue({ id: myid });
+    ProjectService.insertProject = jest.fn().mockResolvedValue(null);
+    await act(async () => {
+      const t = async () => {
+        await result.current.insertProject({ projectname: 'hoge' });
+      };
+      expect(t).rejects.toThrow();
+    });
+  });
 
   it('should get project', async () => {
+    expect.assertions(1);
     const { result } = renderHook(() => useProject());
     const projectid = uuidv4();
     ProjectService.getProject = jest.fn().mockResolvedValue({ id: projectid });
@@ -77,6 +89,17 @@ describe('useProject', () => {
     });
     await waitFor(() => {
       expect(result.current.projectState.project?.id).toEqual(projectid);
+    });
+  });
+  it('should raise error when getProject railed', async () => {
+    expect.assertions(1);
+    const { result } = renderHook(() => useProject());
+    ProjectService.getProject = jest.fn().mockResolvedValue(null);
+    await act(async () => {
+      const t = async () => {
+        await result.current.getProject('hoge');
+      };
+      expect(t).rejects.toThrow();
     });
   });
   it('should update project', async () => {

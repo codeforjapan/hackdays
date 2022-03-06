@@ -39,8 +39,8 @@ export default function useAvatar({ onUpload }: { onUpload: (url: string) => voi
    * upload a new Avatar
    * @param file a file to upload
    */
-  const uploadAvatar = useCallback((file: File) => {
-    _uploadAvatar(file);
+  const uploadAvatar = useCallback(async (file: File) => {
+    return _uploadAvatar(file);
   }, []);
   async function _uploadAvatar(file: File) {
     try {
