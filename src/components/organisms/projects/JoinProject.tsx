@@ -11,6 +11,7 @@ type Props = {
 
 const MJoinProject: FC<Props> = ({ joined = false, project_id }) => {
   const [isJoined, setIsJoined] = useState(joined);
+  const [loading, setLoading] = useState(false);
   const requesting = useRef(false);
   const t = useT();
 
@@ -26,7 +27,7 @@ const MJoinProject: FC<Props> = ({ joined = false, project_id }) => {
     }
     if (isJoined === null || requesting.current) return;
     requesting.current = true;
-    console.log('requesting', requesting.current);
+    setLoading(true);
     try {
       if (isJoined) {
         await ProjectService.leaveProject({ profile_id: user.id, project_id: project_id });
@@ -35,16 +36,16 @@ const MJoinProject: FC<Props> = ({ joined = false, project_id }) => {
         await ProjectService.joinProject({ profile_id: user.id, project_id: project_id });
         setIsJoined(true);
       }
+    } catch (error: unknown) {
+      console.log((error as Error).message);
+    } finally {
       requesting.current = false;
-      console.log('requesting', requesting.current);
-    } catch (error) {
-      requesting.current = false;
-      console.log('requesting', requesting.current);
+      setLoading(false);
     }
   };
 
   return (
-    <PrimaryButton onClick={() => handleClick()} disabled={requesting.current}>
+    <PrimaryButton onClick={() => handleClick()} loading={loading}>
       {isJoined ? t('Leave this project') : t('Join this project')}
     </PrimaryButton>
   );
