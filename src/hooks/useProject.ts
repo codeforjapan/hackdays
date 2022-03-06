@@ -73,9 +73,7 @@ export default function useProject() {
     }
   }
   const updateProject = async (newproject: ProjectType) => {
-    const data = await ProjectService.updateProject(newproject).catch((e: unknown) => {
-      throw e;
-    });
+    const data = await ProjectService.updateProject(newproject);
     // set new data
     setProject(data);
   };
